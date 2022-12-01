@@ -6,6 +6,10 @@ html {
   html {
     font-size: 16px;
   }
+    /*Remove padding added by body for respomsiveness*/
+  body {
+    padding-top: 0px;
+  }
 }
 
 html {
@@ -14,5 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    /*Add padding to not cover content by navBar*/
+    padding-top: 100px;
 }
