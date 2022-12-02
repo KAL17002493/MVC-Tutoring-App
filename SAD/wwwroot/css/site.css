@@ -22,3 +22,7 @@ body {
     /*Add padding to not cover content by navBar*/
     padding-top: 100px;
 }
+
+.navbarGradient {
+    background-image: linear-gradient(90deg, #C287BD, #F18DB2, #FF9A9C, #FFB381, #FFD46E, #F9F871);
+}
