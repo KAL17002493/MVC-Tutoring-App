@@ -10,6 +10,6 @@ namespace SAD.Models
         [Required]
         public string SName { get; set; }
         [Required]
-        public string type { get; set: }
+        public string type { get; set; }
     }
 }

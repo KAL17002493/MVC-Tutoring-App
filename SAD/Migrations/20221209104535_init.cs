@@ -30,6 +30,7 @@ namespace SAD.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     FName = table.Column<string>(type: "TEXT", nullable: false),
                     SName = table.Column<string>(type: "TEXT", nullable: false),
+                    type = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -163,8 +164,8 @@ namespace SAD.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAENnY6kXug3UnAvb8iafrgM+GOQZ+KEeSkVkO65gpWHveG5w+SEu3sHo7/gfLScqJDQ==", null, false, "Admin", "4feb7ff2-faf3-4a3e-84db-8c69fec5c925", false, "admin@admin.com" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName", "type" },
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEBqCkTWDKhIQLSFKy3TPoXIZWHwtkdjsGOpz5f0b2Fga7JAXKD4cWM2+tloC3XLO6w==", null, false, "Admin", "3eb3f575-1b00-4a73-8c91-ac91d8fad822", false, "admin@admin.com", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

@@ -11,7 +11,7 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221103165529_init")]
+    [Migration("20221209104535_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,6 +223,10 @@ namespace SAD.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -246,12 +250,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENnY6kXug3UnAvb8iafrgM+GOQZ+KEeSkVkO65gpWHveG5w+SEu3sHo7/gfLScqJDQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBqCkTWDKhIQLSFKy3TPoXIZWHwtkdjsGOpz5f0b2Fga7JAXKD4cWM2+tloC3XLO6w==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "4feb7ff2-faf3-4a3e-84db-8c69fec5c925",
+                            SecurityStamp = "3eb3f575-1b00-4a73-8c91-ac91d8fad822",
                             TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
+                            UserName = "admin@admin.com",
+                            type = "Admin"
                         });
                 });
 
