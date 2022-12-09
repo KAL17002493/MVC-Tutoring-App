@@ -50,6 +50,7 @@ namespace SAD.Data
             user.LockoutEnabled = false;
             user.FName = "Admin";
             user.SName = "Admin";
+            user.type = "Admin";
             user.ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d";
             user.PasswordHash = hasher.HashPassword(user, "Admin123!");
 
