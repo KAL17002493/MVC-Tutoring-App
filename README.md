@@ -1,7 +1,6 @@
 # SADL6
 Scheduling Application Dissertation
 
-Add a location field to CustomUserModel to be used upon REGISTERING</br>
 Tutors can be rated by paying students</br>
 
 <h2>Done<h2>
