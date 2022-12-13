@@ -22,18 +22,17 @@
                 <!--Navigation bar options-->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <!--Public Nav Options HERE-->
+
                         <!--Tutors Nav bar options-->
-                        @if(User.IsInRole("Tutor"))
+                        @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="Index">Lessons</a>
                             </li>
                         }
                         <!--Students Nav bar options-->
-                        @if(User.IsInRole("Student"))
+                        @if(User.IsInRole("Student") || User.IsInRole("Admin"))
                         {
 
                         }
@@ -51,7 +50,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="background-color:#f2c2f2">
         <div class="container">
             &copy; 2022 - SAD - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

@@ -19,6 +19,8 @@ html {
 
 body {
     margin-bottom: 60px;
+    /*Body background colour*/
+    background-color: #FFE6FF;
     /*Add padding to not cover content by navBar*/
     padding-top: 100px;
 }
