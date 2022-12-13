@@ -9,7 +9,9 @@ namespace SAD.Models
         public string FName { get; set; }
         [Required]
         public string SName { get; set; }
+        //student or teacher
         [Required]
         public string type { get; set; }
+
     }
 }

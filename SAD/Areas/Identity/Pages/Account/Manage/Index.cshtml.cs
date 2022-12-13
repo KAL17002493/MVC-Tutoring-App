@@ -32,6 +32,9 @@ namespace SAD.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public string Email { get; set; }
 
+        public string FName { get; set; }
+        public string SName { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -67,6 +70,8 @@ namespace SAD.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Email = email;
+            FName = user.FName;
+            SName = user.SName;
 
             Input = new InputModel
             {

@@ -15,14 +15,14 @@
 
                 <!--Displays First name-->
                 <div class="form-floating mb-1">
-                    <input asp-for="Email" class="form-control"/>
-                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="@Model.FName" class="form-control"/>
+                    <label asp-for="@Model.FName" class="form-label">First Name</label>
                 </div>
 
                 <!--Displays Last name-->
                 <div class="form-floating mb-3">
-                    <input asp-for="Email" class="form-control"/>
-                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="@Model.SName" class="form-control"/>
+                    <label asp-for="@Model.SName" class="form-label">Last Name</label>
                 </div>
 
                 <!--Displays Email-->
@@ -33,7 +33,7 @@
 
                 <div class="form-floating mb-3">
                     <input asp-for="Input.PhoneNumber" class="form-control" />
-                    <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                    <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
                     <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                 </div>
 

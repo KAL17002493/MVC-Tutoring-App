@@ -73,12 +73,16 @@ namespace SAD.Areas.Identity.Pages.Account
         {
             //Custom register requirements
             [Required]
-            [Display(Name = "First name")]
+            [Display(Name = "First Name")]
             public string FName { get; set; }
 
             [Required]
-            [Display(Name = "Last name")]
+            [Display(Name = "Last Name")]
             public string SName { get; set; }
+
+            [Required]
+            [Display(Name = "Type")]
+            public string type { get; set; }
 
 
             /// <summary>
@@ -105,7 +109,7 @@ namespace SAD.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
@@ -123,8 +127,8 @@ namespace SAD.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                //Add First & Last name to register requirements
-                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName };
+                //Add First, Last name, Type to register requirements
+                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName, type = Input.type };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

@@ -27,3 +27,35 @@ body {
 .navbarGradient {
     background-image: linear-gradient(90deg, #C287BD, #F18DB2, #FF9A9C, #FFB381, #FFD46E, #F9F871);
 }
+
+/*TESTING GROUNDS*/
+/*Animation test*/
+@keyframes fadeIn {
+    from {
+        width: 350px;
+        height: 350px;
+    }
+
+    to {
+        width: 650px;
+        height: 650px;
+    }
+}
+
+.fade-in:hover {
+    animation: fadeIn 1s linear;
+}
+
+.imgStudent {
+    background-image: url('../images/WhiteBear.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    margin: 0;
+    padding: 0;
+
+    width: 350px;
+    height: 350px;
+
+
+}

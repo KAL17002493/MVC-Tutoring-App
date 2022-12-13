@@ -30,6 +30,12 @@
                 </div>
 
                 <div class="form-floating my-4">
+                    <input asp-for="Input.type" class="form-control" aria-required="true"/>
+                    <label asp-for="Input.type"></label>
+                    <span asp-validation-for="Input.type" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating my-4">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                     <label asp-for="Input.Email"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>

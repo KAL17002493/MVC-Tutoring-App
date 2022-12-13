@@ -6,8 +6,13 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+        //retriveces customUserModel so first and last name could be retrieved
+        CustomUserModel customUserModel = (CustomUserModel)await UserManager.GetUserAsync(User);
+        var firstName = customUserModel.FName;
+        var lastName = customUserModel.SName;
+
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        <a id="manage" style="text-decoration: underline;" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @firstName @lastName</a>
     </li>
     //Changed logout button font size
     <li class="nav-item">
