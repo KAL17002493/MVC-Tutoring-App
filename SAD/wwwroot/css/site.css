@@ -28,6 +28,11 @@ body {
     background-image: linear-gradient(90deg, #C287BD, #F18DB2, #FF9A9C, #FFB381, #FFD46E, #F9F871);
 }
 
+/*Clock size on teacher index view*/
+.clockSize {
+    font-size: 80px;
+}
+
 /*TESTING GROUNDS*/
 /*Animation test*/
 @keyframes fadeIn {

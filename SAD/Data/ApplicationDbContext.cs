@@ -34,6 +34,28 @@ namespace SAD.Data
                     ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d"
 
                 }
+                );            
+            
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole()
+                {
+                    Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                    Name = "Tutor",
+                    NormalizedName = "Tutor".ToUpper(),
+                    ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72"
+
+                }
+                );            
+            
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole()
+                {
+                    Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                    Name = "Student",
+                    NormalizedName = "Student".ToUpper(),
+                    ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820"
+
+                }
                 );
         }
 
@@ -50,7 +72,6 @@ namespace SAD.Data
             user.LockoutEnabled = false;
             user.FName = "Admin";
             user.SName = "Admin";
-            user.type = "Admin";
             user.ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d";
             user.PasswordHash = hasher.HashPassword(user, "Admin123!");
 
