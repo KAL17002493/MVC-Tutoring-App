@@ -17,35 +17,42 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                @*First Name*@
                 <div class="form-floating mb-2">
                     <input asp-for="Input.FName" class="form-control" aria-required="true"/>
                     <label asp-for="Input.FName"></label>
                     <span asp-validation-for="Input.FName" class="text-danger"></span>
                 </div>
 
+                @*Last Name*@
                 <div class="form-floating my-2">
                     <input asp-for="Input.SName" class="form-control" aria-required="true"/>
                     <label asp-for="Input.SName"></label>
                     <span asp-validation-for="Input.SName" class="text-danger"></span>
                 </div>
 
+                @*Email*@
                 <div class="form-floating my-4">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                     <label asp-for="Input.Email"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
+                @*Password*@
                 <div class="form-floating my-2">
                     <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="Input.Password"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
+                @*Confirm Password*@
                 <div class="form-floating mt-2 mb-5">
                     <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                     <label asp-for="Input.ConfirmPassword"></label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
+
+
 
 
                 <div>

@@ -63,14 +63,14 @@ body {
 .studentimage {
     background-image: url("../images/WhiteBear.jpg");
     border: none;
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 60%;
 }
 
     .studentimage:hover {
-        transition: 2s;
-        width: 50%;
-        height: 50%;
+        transition: 0.5s;
+        width: 75%;
+        height: 75%;
         margin-top: 25%;
         margin-left: 25%;
     }
