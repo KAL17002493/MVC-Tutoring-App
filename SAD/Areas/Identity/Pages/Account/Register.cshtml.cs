@@ -31,12 +31,18 @@ namespace SAD.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        //Custom
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         public RegisterModel(
             UserManager<CustomUserModel> userManager,
             IUserStore<CustomUserModel> userStore,
             SignInManager<CustomUserModel> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+
+            //Custom
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +50,9 @@ namespace SAD.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+
+            //Custom
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -71,6 +80,11 @@ namespace SAD.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            //User ROle requirements
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+
             //Custom register requirements
             [Required]
             [Display(Name = "First Name")]
@@ -123,41 +137,59 @@ namespace SAD.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 //Add First, Last name, Type to register requirements
-                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName};
+                var user = new CustomUserModel { UserName = Input.Email, Email = Input.Email, FName = Input.FName, SName = Input.SName };
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
-                if (result.Succeeded)
+                //Give user a ROLE
+                string roleName = Input.Role;
+                //Check if field is no empty
+                if (!string.IsNullOrEmpty(roleName))
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //Assign roleName to variable and check if roleName exists in database
+                    var roleExists = await _roleManager.RoleExistsAsync(roleName);
+                    //If Role does not exist output error message
+                    if (!roleExists)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        ModelState.AddModelError(string.Empty, $"Role '{Input.Role}' you tried to register with does not appear to be in the database, try again.");
+                        return Page();
                     }
+                    //If Role exists execute rest of the register process code
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        var result = await _userManager.CreateAsync(user, Input.Password);
+                        if (result.Succeeded)
+                        {
+                            _logger.LogInformation("User created a new account with password.");
+
+                            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                            var callbackUrl = Url.Page(
+                                "/Account/ConfirmEmail",
+                                pageHandler: null,
+                                values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                                protocol: Request.Scheme);
+
+                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                            {
+                                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                            }
+                            else
+                            {
+                                await _signInManager.SignInAsync(user, isPersistent: false);
+                                return LocalRedirect(returnUrl);
+                            }
+                        }
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
                     }
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(string.Empty, "Please select a role.");
                 }
             }
 

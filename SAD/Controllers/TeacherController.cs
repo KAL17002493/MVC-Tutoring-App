@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SAD.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Tutor")]
     public class TeacherController : Controller
     {
 
