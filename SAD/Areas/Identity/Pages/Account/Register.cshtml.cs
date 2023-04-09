@@ -16,7 +16,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SAD.Models;
 
@@ -31,8 +33,11 @@ namespace SAD.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         public RegisterModel(
             UserManager<CustomUserModel> userManager,
+            RoleManager<IdentityRole> roleManager,
             IUserStore<CustomUserModel> userStore,
             SignInManager<CustomUserModel> signInManager,
             ILogger<RegisterModel> logger,
@@ -43,6 +48,7 @@ namespace SAD.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            _roleManager = roleManager;
             _emailSender = emailSender;
         }
 
@@ -71,6 +77,7 @@ namespace SAD.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
             //Custom register requirements
             [Required]
             [Display(Name = "First Name")]
@@ -112,6 +119,9 @@ namespace SAD.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            var roleList = await _roleManager.Roles.ToListAsync();
+            ViewData["UserRole"] = new SelectList(roleList, "Name", "Name");
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -131,6 +141,17 @@ namespace SAD.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
+
+                    //if (!await _roleManager.RoleExistsAsync(userRole))
+                    //{
+                    //    await _roleManager.CreateAsync(new IdentityRole(userRole));
+                    //}
+                    //await _userManager.AddToRoleAsync(user, userRole);
+
+
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

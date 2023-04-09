@@ -78,7 +78,7 @@ namespace SAD.Data
             builder.Entity<CustomUserModel>().HasData(user);
         }
 
-        //Give admin user it's role
+        //Give admin user it's admin role
         private void SeedUserRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityUserRole<string>>().HasData(

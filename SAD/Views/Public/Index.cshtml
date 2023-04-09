@@ -1,0 +1,42 @@
+﻿@model List<DateTime>
+
+<h1>@Model[0].ToString("MMMM yyyy")</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var date in Model)
+        {
+            <!--Check if data is todays date-->
+            if (date == DateTime.Today)
+            {
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <a href="https://example.com">
+                        <div class="card mb-3 calCard cardToday">
+                            <div class="card-body">
+                                <h5 class="card-title">@date.Day</h5>
+                                <p class="card-text">@date.DayOfWeek.ToString().Substring(0, 3)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+            <!--Rest of the dates-->
+            else
+            {
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <a href="https://example.com">
+                        <div class="card mb-3 calCard">
+                            <div class="card-body">
+                                <h5 class="card-title">@date.Day</h5>
+                                <p class="card-text">@date.DayOfWeek.ToString().Substring(0, 3)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+
+        }
+    </div>
+</div>

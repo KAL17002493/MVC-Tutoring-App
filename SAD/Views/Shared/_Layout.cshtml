@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <!--Navigaio bar-->
+        <!--Navigation bar-->
         <nav class="navbar navbarGradient fixed-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow fs-5 mb-3">
             <div class="container-fluid  mx-5">
                 <a class="navbar-brand me-5" asp-area="" asp-controller="Home" asp-action="Index"><h1>SAD</h1></a>
@@ -23,7 +23,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <!--Public Nav Options HERE-->
-
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Public" asp-action="Index">Calendar</a>
+                        </li>
                         <!--Tutors Nav bar options-->
                         @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {
@@ -35,6 +37,13 @@
                         @if(User.IsInRole("Student") || User.IsInRole("Admin"))
                         {
 
+                        }
+                        <!--Admin Nav bar options-->
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+                            </li>
                         }
 
                     </ul>
@@ -50,7 +59,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted fixed-bottom" style="background-color:#f2c2f2">
+    <footer class="border-top footer text-muted" style="background-color:#f2c2f2">
         <div class="container">
             &copy; 2022 - SAD - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
