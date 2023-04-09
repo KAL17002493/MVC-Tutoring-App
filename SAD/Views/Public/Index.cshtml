@@ -10,7 +10,7 @@
             @if (date == DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="https://example.com">
+                    <a href="@Url.Action("DayView", "Public", new { date = date })">
                         <div class="card mb-3 calCard cardToday">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>
@@ -21,6 +21,7 @@
                 </div>
 
             }
+            //Dates that are gone
             else if (date < DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
@@ -34,7 +35,7 @@
                     </a>
                 </div>
             }
-            //Rest of the dates
+            //Dates to come
             else
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">

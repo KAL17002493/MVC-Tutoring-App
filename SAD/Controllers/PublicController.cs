@@ -25,5 +25,10 @@ namespace SAD.Controllers
             // Pass the list of dates to the view
             return View(dates);
         }
+
+        public IActionResult DayView()
+        {
+            return View();
+        }
     }
 }
