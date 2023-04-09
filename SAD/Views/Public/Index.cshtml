@@ -7,7 +7,7 @@
         @foreach (var date in Model)
         {
             <!--Check if data is todays date-->
-            if (date == DateTime.Today)
+            @if (date == DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
                     <a href="https://example.com">
@@ -21,7 +21,20 @@
                 </div>
 
             }
-            <!--Rest of the dates-->
+            else if (date < DateTime.Today)
+            {
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <a href="https://example.com">
+                        <div class="card mb-3 calCard cardOld">
+                            <div class="card-body">
+                                <h5 class="card-title">@date.Day</h5>
+                                <p class="card-text">@date.DayOfWeek.ToString().Substring(0, 3)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            //Rest of the dates
             else
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
@@ -36,6 +49,7 @@
                 </div>
 
             }
+
 
         }
     </div>
