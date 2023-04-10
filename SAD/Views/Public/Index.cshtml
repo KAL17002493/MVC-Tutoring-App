@@ -10,7 +10,7 @@
             @if (date == DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="@Url.Action("DayView", "Public", new { date = date })">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
                         <div class="card mb-3 calCard cardToday">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>
@@ -25,7 +25,7 @@
             else if (date < DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="https://example.com">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
                         <div class="card mb-3 calCard cardOld">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>
@@ -39,7 +39,7 @@
             else
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="https://example.com">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
                         <div class="card mb-3 calCard">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>

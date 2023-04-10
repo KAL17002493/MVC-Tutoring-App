@@ -1,1 +1,44 @@
-﻿This Is The Day View
+﻿@model List<DateTime>
+
+<h1>Time Sheet</h1>
+<h3 class="mb-5">@ViewBag.CurrentDate.ToString("D")</h3>
+
+<div class="row">
+    @foreach (var timeIntervals in Model)
+    {
+        <!--Check if time is now and changes colour to green-->
+        if (timeIntervals.Hour == DateTime.Now.Hour)
+        {
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+            <div class="card cardToday">
+                <div class="card-body">
+                    <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
+                </div>
+            </div>
+        </div>
+        }
+        //Times that are gone and changes colour to grey
+        else if(timeIntervals < DateTime.Now)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                <div class="card cardOld">
+                    <div class="card-body">
+                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
+                    </div>
+                </div>
+            </div>
+        }
+        //Times to come and keep colour white
+        else
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+        </div>

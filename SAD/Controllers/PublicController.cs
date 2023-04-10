@@ -4,31 +4,46 @@ namespace SAD.Controllers
 {
     public class PublicController : Controller
     {
+        //List of dates for the current month to be passed to the view
         public IActionResult Index()
         {
-            // Get the current date
+            //Get the current date
             DateTime currentDate = DateTime.Now;
 
-            // Get the first day of the current month
+            //Get the first day of the current month
             DateTime firstDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
 
-            // Get the number of days in the current month
+            //Get the number of days in the current month
             int daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
 
-            // Create a list of dates for the current month
+            //Create a list of dates for the current month
             List<DateTime> dates = new List<DateTime>();
             for (int i = 0; i < daysInMonth; i++)
             {
                 dates.Add(firstDayOfMonth.AddDays(i));
             }
 
-            // Pass the list of dates to the view
+            //Pass the list of dates to the view
             return View(dates);
         }
 
         public IActionResult DayView()
         {
-            return View();
+            //Get the current date
+            DateTime currentDate = DateTime.Now;
+
+            //Create a list of periods for the current day
+            List<DateTime> timeIntervals = new List<DateTime>();
+            //Loops from 0 to 23
+            for (int i = 0; i < 24; i++)
+            {
+                DateTime start = currentDate.Date.AddHours(i);
+                timeIntervals.Add(start);
+            }
+
+            //Pass the list of periods and the current date to the view
+            ViewBag.CurrentDate = currentDate;
+            return View(timeIntervals);
         }
     }
 }
