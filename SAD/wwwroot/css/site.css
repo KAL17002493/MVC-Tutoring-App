@@ -26,6 +26,12 @@ html {
     }
 }
 
+/*TeacherScreen View cards*/
+.myTeacher-card {
+    padding: 0;
+    margin: 0;
+}
+
 .cardToday {
     background-color: #9aed91;
 }

@@ -27,22 +27,19 @@ namespace SAD.Controllers
             return View(dates);
         }
 
-        public IActionResult DayView()
+        public IActionResult DayView(DateTime date)
         {
-            //Get the current date
-            DateTime currentDate = DateTime.Now;
-
-            //Create a list of periods for the current day
+            //Create a list of periods for the selected date
             List<DateTime> timeIntervals = new List<DateTime>();
             //Loops from 0 to 23
             for (int i = 0; i < 24; i++)
             {
-                DateTime start = currentDate.Date.AddHours(i);
+                DateTime start = date.Date.AddHours(i);
                 timeIntervals.Add(start);
             }
 
-            //Pass the list of periods and the current date to the view
-            ViewBag.CurrentDate = currentDate;
+            //Pass the list of periods and the selected date to the view
+            ViewBag.SelectedDate = date;
             return View(timeIntervals);
         }
     }

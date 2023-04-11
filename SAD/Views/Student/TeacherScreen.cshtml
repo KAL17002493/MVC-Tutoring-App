@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model List<CustomUserModel>
+
+<h2>Teachers</h2>
+
+@if (Model.Count == 0)
+{
+    <p>No users of Role Teacher found.</p>
+}
+else
+{
+<div class="container">
+    <div class="row">
+            @foreach (var tutor in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card myTeacher-card">
+                        <div class="card-body">
+                            <h5>@tutor.FName @tutor.SName</h5>
+                            <p>@tutor.Email</p>
+                        </div>
+                    </div>
+                </div>
+            }
+    </div>
+</div>
+}
