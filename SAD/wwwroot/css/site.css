@@ -66,6 +66,13 @@ body {
     font-size: 80px;
 }
 
+.Orange {
+    background-color: rgb(255,179,129, .5);
+}
+
+.Blue {
+    background-color: rgb(0,130,189 .5);
+}
 /*TESTING GROUNDS*/
 /*Animation test*/
 @keyframes fadeIn {
