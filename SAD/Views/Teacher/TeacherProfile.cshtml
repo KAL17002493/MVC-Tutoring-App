@@ -1,0 +1,26 @@
+﻿@using SAD.Models
+@model TeacherModel
+
+<div class="container Orange">
+    <!--Row 1-->
+    <div class="row">
+        <!--Column 1-->
+        <div class="col">
+            <div>
+                <img src="https://picsum.photos/id/237/200/300" class="rounded roundImage" alt="...">
+            </div>
+            <div>
+                <h4>@Model.User.FName @Model.User.SName</h4>
+                <h4>@Model.User.Email</h4>
+            </div>
+        </div>
+
+        <!--Column 2-->
+        <div class="col">
+            <h3>About</h3>
+            <div class="mb-3">
+                <textarea class="form-control" id="aboutTeacher" rows="3" placeholder="Little about yourself">@Model.About</textarea>
+            </div>
+        </div>
+    </div>
+</div>

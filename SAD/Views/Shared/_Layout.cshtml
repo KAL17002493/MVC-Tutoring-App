@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Student" asp-action="TeacherScreen">Teacher Screen</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="TeacherProfile">Teacher Profile</a>
+                        </li>
                         <!--Tutors Nav bar options-->
                         @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {

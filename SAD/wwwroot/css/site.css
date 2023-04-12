@@ -26,6 +26,12 @@ html {
     }
 }
 
+.roundImage {
+    border-radius: 50% !important;
+    width: 350px;
+    height: 350px;
+}
+
 /*TeacherScreen View cards*/
 .myTeacher-card {
     padding: 0;
@@ -68,10 +74,12 @@ body {
 
 .Orange {
     background-color: rgb(255,179,129, .5);
+    padding: 20px;
 }
 
 .Blue {
     background-color: rgb(0,130,189 .5);
+    padding: 20px;
 }
 /*TESTING GROUNDS*/
 /*Animation test*/
