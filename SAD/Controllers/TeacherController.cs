@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SAD.Data;
 using SAD.Models;
 
 namespace SAD.Controllers
@@ -7,23 +9,34 @@ namespace SAD.Controllers
     [Authorize(Roles = "Tutor, Admin")]
     public class TeacherController : Controller
     {
+        private readonly UserManager<CustomUserModel> _userManager;
+        //private readonly ApplicationDbContext dbContext;
+        public TeacherController(UserManager<CustomUserModel> userManager/*, ApplicationDbContext dbContext*/)
+        {
+            _userManager = userManager;
+            //_dbContext = dbContext;
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult TeacherProfile()
+        public async Task<IActionResult> TeacherProfile()
         {
+            //Get current user
+            var user = await _userManager.GetUserAsync(User);
+
+            //Check if current user exists
+            if (user == null) 
+            {
+                return NotFound();
+            }
+
             // Create a new instance of the TeacherModel
             var teacherModel = new TeacherModel
             {
-                User = new CustomUserModel
-                {
-                    FName = "John",
-                    SName = "Doe",
-                    Email = "johndoe@example.com"
-                },
+                User = user,
                 Available = true,
                 About = "I am an experienced teacher with 10 years of experience in teaching Math and Science.",
                 teacherCode = "ABC123"
@@ -32,5 +45,6 @@ namespace SAD.Controllers
             // Pass the TeacherModel instance to the view
             return View(teacherModel);
         }
+
     }
 }

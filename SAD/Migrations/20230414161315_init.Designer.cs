@@ -11,7 +11,7 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221209104535_init")]
+    [Migration("20230414161315_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,20 @@ namespace SAD.Migrations
                             ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Name = "Tutor",
+                            NormalizedName = "TUTOR"
+                        },
+                        new
+                        {
+                            Id = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd",
+                            ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         });
                 });
 
@@ -141,6 +155,16 @@ namespace SAD.Migrations
                         {
                             UserId = "143d3180-1104-46f0-8646-62d630056f42",
                             RoleId = "78bf8cbe-1f70-4d6d-890b-247bc57e6150"
+                        },
+                        new
+                        {
+                            UserId = "2e172219-ecdf-45c7-8ea2-8f76bd3a59eb",
+                            RoleId = "2e97d46f-5885-4d65-aa2f-29e7e2d323fd"
+                        },
+                        new
+                        {
+                            UserId = "e13adf95-ebab-4419-ad3e-0d3a5fbb69cd",
+                            RoleId = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02"
                         });
                 });
 
@@ -223,10 +247,6 @@ namespace SAD.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -250,13 +270,48 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBqCkTWDKhIQLSFKy3TPoXIZWHwtkdjsGOpz5f0b2Fga7JAXKD4cWM2+tloC3XLO6w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDvOyQyqMbO3+G7+6ftj7uWsOmr5n3IyDj3eOYsLMCAWUWcs2x4m+y79/AlBAAQCng==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "3eb3f575-1b00-4a73-8c91-ac91d8fad822",
+                            SecurityStamp = "ebb5d1c9-07fd-4f45-bf3e-ade2711c6287",
                             TwoFactorEnabled = false,
-                            UserName = "admin@admin.com",
-                            type = "Admin"
+                            UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "2e172219-ecdf-45c7-8ea2-8f76bd3a59eb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
+                            Email = "student@student.com",
+                            EmailConfirmed = false,
+                            FName = "Student",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "STUDENT@STUDENT.COM",
+                            NormalizedUserName = "STUDENT@STUDENT.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIIGuzoeZfdrCEB/Xdnx8gG5zqjSzmXeTI9Cbdd3R2qG1BwHjLxcTbAMJ3KjeZosgA==",
+                            PhoneNumberConfirmed = false,
+                            SName = "Student",
+                            SecurityStamp = "647f48ca-7329-47e9-a301-cdd9141a8601",
+                            TwoFactorEnabled = false,
+                            UserName = "student@student.com"
+                        },
+                        new
+                        {
+                            Id = "e13adf95-ebab-4419-ad3e-0d3a5fbb69cd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
+                            Email = "tutor@tutor.com",
+                            EmailConfirmed = false,
+                            FName = "Tutor",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TUTOR@TUTOR.COM",
+                            NormalizedUserName = "TUTOR@TUTOR.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKhL2LXn3SVJxIH2OaOJHCAg1GBN+A9Z9IJIKtrCAlUeqljUkk1eKCj/oEfEll9m5Q==",
+                            PhoneNumberConfirmed = false,
+                            SName = "Tutor",
+                            SecurityStamp = "278f2d07-2011-4253-8c13-659e77a8ca6e",
+                            TwoFactorEnabled = false,
+                            UserName = "tutor@tutor.com"
                         });
                 });
 

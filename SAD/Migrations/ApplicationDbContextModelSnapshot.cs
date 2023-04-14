@@ -268,10 +268,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMSE6qP6Dhfoi2kvzV1kVUehs4ZsAUI/6Cmc+FqOCJ8RHE0UF+LRPAukBA3sde7G4Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDvOyQyqMbO3+G7+6ftj7uWsOmr5n3IyDj3eOYsLMCAWUWcs2x4m+y79/AlBAAQCng==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "5031b0c5-1b5d-4ef8-bfe0-a13cd135caa2",
+                            SecurityStamp = "ebb5d1c9-07fd-4f45-bf3e-ade2711c6287",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -286,10 +286,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT@STUDENT.COM",
                             NormalizedUserName = "STUDENT@STUDENT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIIgYJDi8mXZnIaM0q+sPkLQZowAUvdLqLrqaCjyCJBuXStq25LdEmPfTCYwpKO4dA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIIGuzoeZfdrCEB/Xdnx8gG5zqjSzmXeTI9Cbdd3R2qG1BwHjLxcTbAMJ3KjeZosgA==",
                             PhoneNumberConfirmed = false,
                             SName = "Student",
-                            SecurityStamp = "3622764d-9c5a-44ee-99ad-1937ef954093",
+                            SecurityStamp = "647f48ca-7329-47e9-a301-cdd9141a8601",
                             TwoFactorEnabled = false,
                             UserName = "student@student.com"
                         },
@@ -304,10 +304,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TUTOR@TUTOR.COM",
                             NormalizedUserName = "TUTOR@TUTOR.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJZWDhGzeMhiUEy+5Xa3JG910Dl1cyUK1qiJ67hYl8eB50cfgh0X0aEvvOW6+++6BQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKhL2LXn3SVJxIH2OaOJHCAg1GBN+A9Z9IJIKtrCAlUeqljUkk1eKCj/oEfEll9m5Q==",
                             PhoneNumberConfirmed = false,
                             SName = "Tutor",
-                            SecurityStamp = "e97ea359-d8f7-4e0b-90d3-0ad1d8852026",
+                            SecurityStamp = "278f2d07-2011-4253-8c13-659e77a8ca6e",
                             TwoFactorEnabled = false,
                             UserName = "tutor@tutor.com"
                         });

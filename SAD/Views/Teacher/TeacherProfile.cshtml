@@ -12,15 +12,17 @@
             <div class="mt-4">
                 <h4>@Model.User.FName @Model.User.SName</h4>
                 <h4>@Model.User.Email</h4>
+                <h4>@Model.User.Id</h4>
             </div>
         </div>
 
         <!--Column 2-->
         <div class="col">
             <h3>About</h3>
-            <div class="mb-3">
-                <textarea class="form-control" id="aboutTeacher" rows="3" placeholder="Little about yourself">@Model.About</textarea>
+            <div class="mb-1">
+                <textarea class="form-control" id="aboutTeacher" rows="3" placeholder="Write something promotional about yourself to a potential student"></textarea>
             </div>
+            <button class="btn btn-success w-100" type="button">Save</button>
         </div>
     </div>
 
@@ -37,7 +39,9 @@
         <!--Column 2-->
         <div class="col">
             <div class="d-flex justify-content-between">
-                <button class="btn btn-success flex-fill me-1" type="button">Available</button>
+
+                <button class="btn btn-success flex-fill me-1" type="submit">Available</button>
+
                 <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
             </div>
         </div>
