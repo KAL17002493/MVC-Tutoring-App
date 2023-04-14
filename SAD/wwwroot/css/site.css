@@ -32,6 +32,10 @@ html {
     height: 350px;
 }
 
+.teacherCode {
+    min-width: 100px !important;
+}
+
 /*TeacherScreen View cards*/
 .myTeacher-card {
     padding: 0;

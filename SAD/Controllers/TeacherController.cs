@@ -4,7 +4,7 @@ using SAD.Models;
 
 namespace SAD.Controllers
 {
-    //[Authorize(Roles = "Tutor, Admin")]
+    [Authorize(Roles = "Tutor, Admin")]
     public class TeacherController : Controller
     {
 
