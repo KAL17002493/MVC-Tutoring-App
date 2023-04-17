@@ -9,6 +9,7 @@ Tutors can be rated by paying students</br>
     <li>Cannot navigate to Admin area I have no idea why</li>
     <li>Cannot choose your role (Tutor/Student) upon registering, cannot figure out how to implement it properly</li>
     <li>Footer is stuck at the bottom of the viewport not bottom of page, no idea how to fixe it I tried different mixes of footer CSS edit but nothing worked and deleting the footer makes is so no content is rendered</li>
+    <li>Cannot update TeacherProfile</li
   </ul>
 </h6>
 
