@@ -3,11 +3,25 @@
 
 <!--My Teachers-->
 <div class="Blue">
-    <h2 class="my-4 mx-4">My Teachers</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="mb-4 mx-2">My Teachers</h2>
+            </div>
+            <div class="col">
+                <div class="input-group mb-4 mx-4">
+                    <span class="input-group-text ">Teacher Code</span>
+                    <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode">
+                    <button class="btn btn-secondary">Add</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 <!--Public Teachers-->
 <div class="Orange">
-    <h2 class="my-4 mx-4">Public Teachers</h2>
+    <h2 class="mb-4 mx-2">Public Teachers</h2>
     <!--If no teachers are found, display message-->
     @if (Model.Count == 0)
     {
@@ -20,6 +34,7 @@
         <div class="row">
                 @foreach (var tutor in Model)
                 {
+                    //TO MAKE THIS WORK I NEED TO FIX THE TEACHER PROFILE FIRST (Each card should contain teach teacher unique profile identifire)
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
                         <div class="card myTeacher-card">
                             <div class="card-body">

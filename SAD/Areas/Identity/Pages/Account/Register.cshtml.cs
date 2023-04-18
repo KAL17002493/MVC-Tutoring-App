@@ -35,6 +35,8 @@ namespace SAD.Areas.Identity.Pages.Account
 
         private readonly RoleManager<IdentityRole> _roleManager;
 
+        public List<SelectListItem> Roles { get; }
+
         public RegisterModel(
             UserManager<CustomUserModel> userManager,
             RoleManager<IdentityRole> roleManager,
@@ -50,6 +52,13 @@ namespace SAD.Areas.Identity.Pages.Account
             _logger = logger;
             _roleManager = roleManager;
             _emailSender = emailSender;
+
+            //Create a list of roles for the dropdown
+            Roles = new List<SelectListItem>
+            {
+                new SelectListItem {Value = "Tutor", Text ="Tutor"},
+                new SelectListItem {Value = "Student", Text = "Student"},
+            };
         }
 
         /// <summary>
@@ -77,6 +86,10 @@ namespace SAD.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [Display(Name = "UserRole")]
+            public string UserRole { get; set; }
+
 
             //Custom register requirements
             [Required]
@@ -119,9 +132,6 @@ namespace SAD.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            var roleList = await _roleManager.Roles.ToListAsync();
-            ViewData["UserRole"] = new SelectList(roleList, "Name", "Name");
-
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -130,6 +140,14 @@ namespace SAD.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            // Check if UserRole is not emtpy and is a valid role
+            if (string.IsNullOrEmpty(Input.UserRole) || !Roles.Any(r => r.Value == Input.UserRole))
+            {
+                ModelState.AddModelError(string.Empty, "Please select a valid user role from the dropdown.");
+                return Page();
+            }
+
             if (ModelState.IsValid)
             {
                 //Add First, Last name, Type to register requirements
@@ -141,16 +159,8 @@ namespace SAD.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-
-
-                    //if (!await _roleManager.RoleExistsAsync(userRole))
-                    //{
-                    //    await _roleManager.CreateAsync(new IdentityRole(userRole));
-                    //}
-                    //await _userManager.AddToRoleAsync(user, userRole);
-
-
-
+                    //Add user to role
+                    await _userManager.AddToRoleAsync(user, Input.UserRole);
 
                     _logger.LogInformation("User created a new account with password.");
 

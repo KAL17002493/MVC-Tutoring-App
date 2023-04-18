@@ -52,7 +52,15 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                <div>
+                @*Role Dropdown*@
+                <div class="form-group">
+                    <select asp-for="Input.UserRole" asp-items="@(Model.Roles)">
+                        <option>Please select a role</option>
+                    </select>
+                    <span asp-validation-for="Input.UserRole" class="text-danger"></span>
+                </div>
+
+                            <div>
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
                 </div>
 

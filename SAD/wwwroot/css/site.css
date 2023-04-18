@@ -76,6 +76,10 @@ body {
     font-size: 80px;
 }
 
+.noPadding{
+    padding: 0px;
+}
+
 .Orange {
     background-color: rgb(255,179,129, .5);
     padding: 20px;
