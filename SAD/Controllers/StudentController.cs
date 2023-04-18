@@ -32,10 +32,10 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            // Get all the users in the role
+            //Get all users role
             var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
 
-            // Return the view with the list of users
+            //Return view with list of users
             return View(usersInRole);
         }
     }

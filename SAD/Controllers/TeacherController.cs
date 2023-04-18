@@ -33,7 +33,7 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            // Create a new instance of the TeacherModel
+            //Create a new instance of the TeacherModel
             var teacherModel = new TeacherModel
             {
                 User = user,
@@ -42,7 +42,7 @@ namespace SAD.Controllers
                 teacherCode = "ABC123"
             };
 
-            // Pass the TeacherModel instance to the view
+            //Pass the TeacherModel instance to the view
             return View(teacherModel);
         }
 
