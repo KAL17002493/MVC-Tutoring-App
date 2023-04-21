@@ -11,8 +11,8 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230414161315_init")]
-    partial class init
+    [Migration("20230421103333_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,7 +192,14 @@ namespace SAD.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Available")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -247,6 +254,10 @@ namespace SAD.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("teacherCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -262,7 +273,9 @@ namespace SAD.Migrations
                         new
                         {
                             Id = "143d3180-1104-46f0-8646-62d630056f42",
+                            About = "",
                             AccessFailedCount = 0,
+                            Available = true,
                             ConcurrencyStamp = "231728ec-ceef-4de5-8c95-7f82a488cc0d",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
@@ -270,17 +283,20 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDvOyQyqMbO3+G7+6ftj7uWsOmr5n3IyDj3eOYsLMCAWUWcs2x4m+y79/AlBAAQCng==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ3/0Z3YJMdn0IFf8rCmDl3GhJfJrYiJa1Q3c9vB4NQTBNyUdiy7iRssvGozKENeaA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "ebb5d1c9-07fd-4f45-bf3e-ade2711c6287",
+                            SecurityStamp = "7d5def62-ecdb-4684-9339-a5583daea561",
                             TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
+                            UserName = "admin@admin.com",
+                            teacherCode = ""
                         },
                         new
                         {
                             Id = "2e172219-ecdf-45c7-8ea2-8f76bd3a59eb",
+                            About = "",
                             AccessFailedCount = 0,
+                            Available = true,
                             ConcurrencyStamp = "2a956498-1cb2-4a0f-8d27-236a95c6e820",
                             Email = "student@student.com",
                             EmailConfirmed = false,
@@ -288,17 +304,20 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT@STUDENT.COM",
                             NormalizedUserName = "STUDENT@STUDENT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIIGuzoeZfdrCEB/Xdnx8gG5zqjSzmXeTI9Cbdd3R2qG1BwHjLxcTbAMJ3KjeZosgA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBnBMcQkGc8d6iXaVY8yAO87FWVV0jpbfp9WAu3LQCgBpocUcA9NEkqgroyGNaqqyg==",
                             PhoneNumberConfirmed = false,
                             SName = "Student",
-                            SecurityStamp = "647f48ca-7329-47e9-a301-cdd9141a8601",
+                            SecurityStamp = "72acfe67-f0f7-4b12-a6c0-559d02ca3e2f",
                             TwoFactorEnabled = false,
-                            UserName = "student@student.com"
+                            UserName = "student@student.com",
+                            teacherCode = ""
                         },
                         new
                         {
                             Id = "e13adf95-ebab-4419-ad3e-0d3a5fbb69cd",
+                            About = "I am an experienced teacher with 10 years of experience in teaching Math and Science.",
                             AccessFailedCount = 0,
+                            Available = true,
                             ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
                             Email = "tutor@tutor.com",
                             EmailConfirmed = false,
@@ -306,12 +325,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TUTOR@TUTOR.COM",
                             NormalizedUserName = "TUTOR@TUTOR.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKhL2LXn3SVJxIH2OaOJHCAg1GBN+A9Z9IJIKtrCAlUeqljUkk1eKCj/oEfEll9m5Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM/X/K9OnvmfuPxAHPTotpL2qj5ANiYxqWgnVK5AP7dXJpI91CMk1eBdy7zegir0JQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Tutor",
-                            SecurityStamp = "278f2d07-2011-4253-8c13-659e77a8ca6e",
+                            SecurityStamp = "6c7a9693-bc20-42b6-9baa-b6523c32163f",
                             TwoFactorEnabled = false,
-                            UserName = "tutor@tutor.com"
+                            UserName = "tutor@tutor.com",
+                            teacherCode = "1234567890"
                         });
                 });
 

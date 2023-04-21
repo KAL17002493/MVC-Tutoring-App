@@ -1,5 +1,5 @@
 ﻿@using SAD.Models
-@model TeacherModel
+@model CustomUserModel
 
 <div class="container Orange">
     <!--Row 1-->
@@ -10,9 +10,10 @@
                 <img src="https://d.newsweek.com/en/full/1920025/cat-its-mouth-open.jpg?w=1600&h=1600&q=88&f=b7a44663e082b8041129616b6b73328d" class="rounded roundImage" alt="...">
             </div>
             <div class="mt-4">
-                <h4>@Model.User.FName @Model.User.SName</h4>
-                <h4>@Model.User.Email</h4>
-                <h4>@Model.User.Id</h4>
+                <h4>@Model.FName @Model.SName</h4>
+                <h4>@Model.Email</h4>
+                <h4>@Model.Id</h4>
+                @Model.About
             </div>
         </div>
 

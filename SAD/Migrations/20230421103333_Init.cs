@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SAD.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,9 @@ namespace SAD.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     FName = table.Column<string>(type: "TEXT", nullable: false),
                     SName = table.Column<string>(type: "TEXT", nullable: false),
+                    Available = table.Column<bool>(type: "INTEGER", nullable: false),
+                    About = table.Column<string>(type: "TEXT", nullable: false),
+                    teacherCode = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -173,18 +176,18 @@ namespace SAD.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", 0, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEDvOyQyqMbO3+G7+6ftj7uWsOmr5n3IyDj3eOYsLMCAWUWcs2x4m+y79/AlBAAQCng==", null, false, "Admin", "ebb5d1c9-07fd-4f45-bf3e-ade2711c6287", false, "admin@admin.com" });
+                columns: new[] { "Id", "About", "AccessFailedCount", "Available", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName", "teacherCode" },
+                values: new object[] { "143d3180-1104-46f0-8646-62d630056f42", "", 0, true, "231728ec-ceef-4de5-8c95-7f82a488cc0d", "admin@admin.com", false, "Admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEJ3/0Z3YJMdn0IFf8rCmDl3GhJfJrYiJa1Q3c9vB4NQTBNyUdiy7iRssvGozKENeaA==", null, false, "Admin", "7d5def62-ecdb-4684-9339-a5583daea561", false, "admin@admin.com", "" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "2e172219-ecdf-45c7-8ea2-8f76bd3a59eb", 0, "2a956498-1cb2-4a0f-8d27-236a95c6e820", "student@student.com", false, "Student", false, null, "STUDENT@STUDENT.COM", "STUDENT@STUDENT.COM", "AQAAAAEAACcQAAAAEIIGuzoeZfdrCEB/Xdnx8gG5zqjSzmXeTI9Cbdd3R2qG1BwHjLxcTbAMJ3KjeZosgA==", null, false, "Student", "647f48ca-7329-47e9-a301-cdd9141a8601", false, "student@student.com" });
+                columns: new[] { "Id", "About", "AccessFailedCount", "Available", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName", "teacherCode" },
+                values: new object[] { "2e172219-ecdf-45c7-8ea2-8f76bd3a59eb", "", 0, true, "2a956498-1cb2-4a0f-8d27-236a95c6e820", "student@student.com", false, "Student", false, null, "STUDENT@STUDENT.COM", "STUDENT@STUDENT.COM", "AQAAAAEAACcQAAAAEBnBMcQkGc8d6iXaVY8yAO87FWVV0jpbfp9WAu3LQCgBpocUcA9NEkqgroyGNaqqyg==", null, false, "Student", "72acfe67-f0f7-4b12-a6c0-559d02ca3e2f", false, "student@student.com", "" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "e13adf95-ebab-4419-ad3e-0d3a5fbb69cd", 0, "68144efc-092a-403e-a7fe-3c276de06a72", "tutor@tutor.com", false, "Tutor", false, null, "TUTOR@TUTOR.COM", "TUTOR@TUTOR.COM", "AQAAAAEAACcQAAAAEKhL2LXn3SVJxIH2OaOJHCAg1GBN+A9Z9IJIKtrCAlUeqljUkk1eKCj/oEfEll9m5Q==", null, false, "Tutor", "278f2d07-2011-4253-8c13-659e77a8ca6e", false, "tutor@tutor.com" });
+                columns: new[] { "Id", "About", "AccessFailedCount", "Available", "ConcurrencyStamp", "Email", "EmailConfirmed", "FName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SName", "SecurityStamp", "TwoFactorEnabled", "UserName", "teacherCode" },
+                values: new object[] { "e13adf95-ebab-4419-ad3e-0d3a5fbb69cd", "I am an experienced teacher with 10 years of experience in teaching Math and Science.", 0, true, "68144efc-092a-403e-a7fe-3c276de06a72", "tutor@tutor.com", false, "Tutor", false, null, "TUTOR@TUTOR.COM", "TUTOR@TUTOR.COM", "AQAAAAEAACcQAAAAEM/X/K9OnvmfuPxAHPTotpL2qj5ANiYxqWgnVK5AP7dXJpI91CMk1eBdy7zegir0JQ==", null, false, "Tutor", "6c7a9693-bc20-42b6-9baa-b6523c32163f", false, "tutor@tutor.com", "1234567890" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

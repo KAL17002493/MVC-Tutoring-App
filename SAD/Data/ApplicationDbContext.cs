@@ -44,8 +44,7 @@ namespace SAD.Data
                     Id = "ecfbe7ad-bb6b-49e6-ac2b-6359a73fbf02",
                     Name = "Tutor",
                     NormalizedName = "Tutor".ToUpper(),
-                    ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72"
-
+                    ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72",
                 }
                 );            
             
@@ -76,6 +75,9 @@ namespace SAD.Data
             user.SName = "Tutor";
             user.ConcurrencyStamp = "68144efc-092a-403e-a7fe-3c276de06a72";
             user.PasswordHash = hasher.HashPassword(user, "Qwe123!");
+
+            user.About = "I am an experienced teacher with 10 years of experience in teaching Math and Science.";
+            user.teacherCode = "1234567890";
 
             builder.Entity<CustomUserModel>().HasData(user);
         }
