@@ -22,7 +22,7 @@ namespace SAD.Controllers
             return View();
         }
 
-        public async Task<IActionResult> TeacherProfile()
+        public async Task<IActionResult> TeacherProfile(CustomUserModel model)
         {
             //Get current user
             var user = await _userManager.GetUserAsync(User);
@@ -32,17 +32,15 @@ namespace SAD.Controllers
             {
                 return NotFound();
             }
+            else 
+            {
+            user.About = model.About;
+            user.Available = model.Available;
+            }
 
-            //Create new instance TeacherModel
-            //var teacherModel = new TeacherModel
-            //{
-            //    User = user,
-            //    Available = true,
-            //    About = "I am an experienced teacher with 10 years of experience in teaching Math and Science.",
-            //    teacherCode = "ABC123"
-            //};
+            //UserManager.Update(user);
 
-            //Pass the TeacherModel instance to the view
+            //Pass the user model to view
             return View(user);
         }
 
