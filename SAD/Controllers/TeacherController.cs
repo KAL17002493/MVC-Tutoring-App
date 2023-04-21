@@ -33,16 +33,7 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            //Create new instance TeacherModel
-            //var teacherModel = new TeacherModel
-            //{
-            //    User = user,
-            //    Available = true,
-            //    About = "I am an experienced teacher with 10 years of experience in teaching Math and Science.",
-            //    teacherCode = "ABC123"
-            //};
-
-            //Pass the TeacherModel instance to the view
+            //Pass the user model to view
             return View(user);
         }
 
