@@ -1,8 +1,8 @@
 ﻿@using SAD.Models
 @model CustomUserModel
 
-<form method="post" action="@Url.Action("TeacherProfile", "Teacher")">
-    <div class="container Orange">
+<div class="container Orange">
+    <form method="post" action="@Url.Action("TeacherProfile", "Teacher")">
         <!--Row 1-->
         <div class="row">
             <!--Column 1-->
@@ -26,36 +26,34 @@
                 <button class="btn btn-success w-100" type="submit">Save</button>
             </div>
         </div>
+    </form>
 
-        <!--Row 2-->
-        <div class="row mt-5">
-            <!--Column 1-->
-            <div class="col">
-                <div class="input-group">
-                    <span class="input-group-text ">Teacher Code</span>
-                    <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode" value="@Model.teacherCode" disabled>
-                    <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
-                </div>
-            </div>
-            <!--Column 2-->
-            <div class="col">
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-success flex-fill me-1" name="Available" value="True" type="submit">
-                        @if (Model.Available)
-                        {
-                            <span>Available</span>
-                        }
-                        else
-                        {
-                            <span>Unavailable</span>
-                        }
-                    </button>
-                    <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
-                </div>
+    <!--Row 2-->
+    <div class="row mt-5">
+        <!--Column 1-->
+        <div class="col">
+            <div class="input-group">
+                <span class="input-group-text ">Teacher Code</span>
+                <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode" value="@Model.teacherCode" disabled>
+                <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
             </div>
         </div>
+        <!--Column 2-->
+        <div class="col">
+            <form method="post" action="@Url.Action("ToggleAvailability", "Teacher")">
+                @if (Model.Available)
+                {
+                    <button class="btn btn-success flex-fill me-1" type="submit">Available</button>
+                }
+                else
+                {
+                    <button class="btn btn-danger flex-fill me-1" type="submit">Unavailable</button>
+                }
+                <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
+            </form>
+        </div>
     </div>
-</form>
+</div>
 
 <!--JS for copy button-->
 <script>

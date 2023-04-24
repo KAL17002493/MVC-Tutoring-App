@@ -38,26 +38,39 @@ namespace SAD.Controllers
             return View(user);
         }
 
+        //Save changes to "About" section
         [HttpPost]
         public async Task<IActionResult> TeacherProfile(CustomUserModel model)
         {
-            //Get current user
             var user = await _userManager.GetUserAsync(User);
 
-            //Check if current user exists
             if (user == null)
             {
                 return NotFound();
             }
-            else
+
+            user.About = model.About;
+            await _userManager.UpdateAsync(user);
+
+            return View(user);
+        }
+
+        //Toggle availability
+        [HttpPost]
+        public async Task<IActionResult> ToggleAvailability()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
             {
-                user.About = model.About;
-                user.Available = !user.Available;
-                await _userManager.UpdateAsync(user);
+                return NotFound();
             }
 
-            //Pass the user model to view
-            return View(user);
+            user.Available = !user.Available;
+
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(TeacherProfile));
         }
 
     }
