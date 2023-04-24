@@ -1,52 +1,61 @@
 ﻿@using SAD.Models
 @model CustomUserModel
 
-<div class="container Orange">
-    <!--Row 1-->
-    <div class="row">
-        <!--Column 1-->
-        <div class="col">
-            <div>
-                <img src="https://d.newsweek.com/en/full/1920025/cat-its-mouth-open.jpg?w=1600&h=1600&q=88&f=b7a44663e082b8041129616b6b73328d" class="rounded roundImage" alt="...">
+<form method="post" action="@Url.Action("TeacherProfile", "Teacher")">
+    <div class="container Orange">
+        <!--Row 1-->
+        <div class="row">
+            <!--Column 1-->
+            <div class="col">
+                <div>
+                    <img src="https://d.newsweek.com/en/full/1920025/cat-its-mouth-open.jpg?w=1600&h=1600&q=88&f=b7a44663e082b8041129616b6b73328d" class="rounded roundImage" alt="...">
+                </div>
+                <div class="mt-4">
+                    <h4>@Model.FName @Model.SName</h4>
+                    <h4>@Model.Email</h4>
+                    @Model.Available
+                </div>
             </div>
-            <div class="mt-4">
-                <h4>@Model.FName @Model.SName</h4>
-                <h4>@Model.Email</h4>
+
+            <!--Column 2-->
+            <div class="col">
+                <h3>About</h3>
+                <div class="mb-1">
+                    <textarea id="About" name="About" class="form-control" rows="3" placeholder="Write stuff here">@Model.About</textarea>
+                </div>
+                <button class="btn btn-success w-100" type="submit">Save</button>
             </div>
         </div>
 
-        <!--Column 2-->
-        <div class="col">
-            <h3>About</h3>
-            <div class="mb-1">
-                <textarea class="form-control" id="aboutTeacher" rows="3" placeholder="Write stuff here">@Model.About</textarea>
+        <!--Row 2-->
+        <div class="row mt-5">
+            <!--Column 1-->
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text ">Teacher Code</span>
+                    <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode" value="@Model.teacherCode" disabled>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
+                </div>
             </div>
-            <button class="btn btn-success w-100" type="button">Save</button>
+            <!--Column 2-->
+            <div class="col">
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-success flex-fill me-1" name="Available" value="True" type="submit">
+                        @if (Model.Available)
+                        {
+                            <span>Available</span>
+                        }
+                        else
+                        {
+                            <span>Unavailable</span>
+                        }
+                    </button>
+                    <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!--Row 1-->
-    <div class="row mt-5">
-        <!--Column 1-->
-        <div class="col">
-            <div class="input-group">
-                <span class="input-group-text ">Teacher Code</span>
-                <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode" value="@Model.teacherCode" disabled>
-                <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
-            </div>
-        </div> 
-        <!--Column 2-->
-        <div class="col">
-            <div class="d-flex justify-content-between">
-
-                <button class="btn btn-success flex-fill me-1" type="submit">Available</button>
-
-                <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+</form>
 
 <!--JS for copy button-->
 <script>
