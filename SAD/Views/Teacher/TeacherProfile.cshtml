@@ -41,15 +41,17 @@
         <!--Column 2-->
         <div class="col">
             <form method="post" action="@Url.Action("ToggleAvailability", "Teacher")">
-                @if (Model.Available)
-                {
-                    <button class="btn btn-success flex-fill me-1" type="submit">Available</button>
-                }
-                else
-                {
-                    <button class="btn btn-danger flex-fill me-1" type="submit">Unavailable</button>
-                }
-                <button class="btn btn-primary flex-fill ms-1" type="button">Lessons</button>
+                <div class="d-flex">
+                    @if (Model.Available)
+                    {
+                        <button class="btn btn-success flex-fill me-1" type="submit">Available</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-danger flex-fill me-1" type="submit">Unavailable</button>
+                    }
+                    <button class="btn btn-primary flex-fill" type="button">Lessons</button>
+                </div>
             </form>
         </div>
     </div>
