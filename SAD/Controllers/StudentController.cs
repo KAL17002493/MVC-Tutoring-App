@@ -38,5 +38,20 @@ namespace SAD.Controllers
             //Return view with list of users
             return View(usersInRole);
         }
+
+        public async Task<IActionResult> TeacherProfileScreen(string id)
+        {
+            //Get teacher by ID
+            var teacherProfile = await _userManager.FindByIdAsync(id);
+
+            //Check if teacher exists
+            if (teacherProfile == null)
+            {
+                return NotFound();
+            }
+
+            //Pass the teacher model to view
+            return View(teacherProfile);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity;
+﻿@*TEacherScreen.cshtml*@
+@using Microsoft.AspNetCore.Identity;
 @model List<CustomUserModel>
 
 <!--My Teachers-->
@@ -37,13 +38,13 @@
                     //Only display teachers that are availible
                     @if(tutor.Available == true)
                     {
-                    //TO MAKE THIS WORK I NEED TO FIX THE TEACHER PROFILE FIRST (Each card should contain teach teacher unique profile identifire)
+                    //Direct user to teacher profile screen by clicking on card
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
                         <div class="card myTeacher-card">
                             <div class="card-body">
                                 <h5>@tutor.FName @tutor.SName</h5>
                                 <p>@tutor.Email</p>
-                                <a href="https://www.youtube.com/" class="stretched-link"></a>
+                                    <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>

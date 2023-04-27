@@ -1,0 +1,33 @@
+﻿@*PublicTeacherProfile.cshtml*@
+@model CustomUserModel
+
+<div class="container Orange">
+    <!--Row 1-->
+    <div class="row">
+        <!--Column 1-->
+        <div class="col">
+            <div>
+                <img src="https://d.newsweek.com/en/full/1920025/cat-its-mouth-open.jpg?w=1600&h=1600&q=88&f=b7a44663e082b8041129616b6b73328d" class="rounded roundImage" alt="...">
+            </div>
+            <div class="mt-4">
+                <h4>@Model.FName @Model.SName</h4>
+                <h4>@Model.Email</h4>
+            </div>
+        </div>
+
+        <!--Column 2-->
+        <div class="col">
+            <h3>About</h3>
+            <div class="mb-1">
+                <textarea id="About" name="About" class="form-control" rows="3" placeholder="Write stuff here">@Model.About</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!--Row 2-->
+    <div class="row mt-5">
+        <!--Column 2-->
+        <div class="col">
+        </div>
+    </div>
+</div>
