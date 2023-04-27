@@ -1,28 +1,53 @@
 ﻿@*TEacherScreen.cshtml*@
-@using Microsoft.AspNetCore.Identity;
 @model List<CustomUserModel>
 
 <!--My Teachers-->
-<div class="Blue">
+<div class="Blue my-5">
     <div class="container">
         <div class="row">
-            <div class="col">
-                <h2 class="mb-4 mx-2">My Teachers</h2>
+            <div class="col-md-6">
+                <h2 class="mb-4 mx-2">My Tutors</h2>
             </div>
-            <div class="col">
+            <div class="col-md-6">
                 <div class="input-group mb-4 mx-4">
-                    <span class="input-group-text ">Teacher Code</span>
-                    <input type="text" aria-label="teacherCode" id="teacherCode" class="form-control teacherCode">
-                    <button class="btn btn-secondary">Add</button>
+                    <span class="input-group-text">Teacher Code</span>
+                    <input type="text" aria-label="teacherCode" id="teacherCode" name="teacherCode" class="form-control teacherCode" placeholder="Input teacher code here">
                 </div>
-
             </div>
         </div>
+        @if (Model.Count == 0)
+        {
+            <p>You are not following any teachers or there is some problem with the web application but it is probably the former</p>
+        }
+        else
+        {
+
+                <div class="row">
+                    @foreach (var tutor in Model)
+                    {
+                        @if (tutor.Available == true)
+                        {
+                            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                                <div class="card myTeacher-card">
+                                    <div class="card-body">
+                                        <h5>@tutor.FName @tutor.SName</h5>
+                                        <p>@tutor.Email</p>
+                                        <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+        }
     </div>
 </div>
+
+
+
 <!--Public Teachers-->
 <div class="Orange">
-    <h2 class="mb-4 mx-2">Public Teachers</h2>
+    <h2 class="mb-4 mx-2">Public Tutors</h2>
     <!--If no teachers are found, display message-->
     @if (Model.Count == 0)
     {
@@ -44,7 +69,7 @@
                             <div class="card-body">
                                 <h5>@tutor.FName @tutor.SName</h5>
                                 <p>@tutor.Email</p>
-                                    <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
+                                <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>
