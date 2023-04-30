@@ -57,7 +57,7 @@
                 @foreach (var tutor in Model.PublicTeachers)
                 {
                     //Only display teachers that are availible
-                    @if(tutor.Available == true)
+                    @if (tutor.Available == true && !Model.FollowedTeachers.Any(ft => ft.Id == tutor.Id))
                     {
                     //Direct user to teacher profile screen by clicking on card
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">

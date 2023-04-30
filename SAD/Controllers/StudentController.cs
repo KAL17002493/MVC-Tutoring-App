@@ -108,8 +108,8 @@ namespace SAD.Controllers
             await _context.Follow.AddAsync(follow);
             await _context.SaveChangesAsync();
 
-            // Redirect to the teacher profile page
-            return RedirectToAction("TeacherProfileScreen", new { id = teacherId });
+            // Redirect to the teacher screen
+            return RedirectToAction("TeacherScreen");
         }
 
         //Display list of teachers that the user is following
@@ -128,7 +128,6 @@ namespace SAD.Controllers
                 var teacher = await _userManager.FindByIdAsync(follow.FollowingId);
                 teachers.Add(teacher);
             }
-
             // Return the list of teacher profiles to the view
             return View(teachers);
         }
