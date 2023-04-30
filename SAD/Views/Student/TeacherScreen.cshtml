@@ -1,7 +1,7 @@
 ﻿@*TEacherScreen.cshtml*@
-@model List<CustomUserModel>
+@model TeacherScreenViewModel
 
-<!--My Teachers-->
+<!-- My Teachers -->
 <div class="Blue my-5">
     <div class="container">
         <div class="row">
@@ -15,30 +15,26 @@
                 </div>
             </div>
         </div>
-        @if (Model.Count == 0)
+        @if (Model.FollowedTeachers.Count == 0)
         {
             <p>You are not following any teachers or there is some problem with the web application but it is probably the former</p>
         }
         else
         {
-
-                <div class="row">
-                    @foreach (var tutor in Model)
-                    {
-                        @if (tutor.Available == true)
-                        {
-                            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                                <div class="card myTeacher-card">
-                                    <div class="card-body">
-                                        <h5>@tutor.FName @tutor.SName</h5>
-                                        <p>@tutor.Email</p>
-                                        <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
-                                    </div>
-                                </div>
+            <div class="row">
+                @foreach (var teacher in Model.FollowedTeachers)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                        <div class="card myTeacher-card">
+                            <div class="card-body">
+                                <h5>@teacher.FName @teacher.SName</h5>
+                                <p>@teacher.Email</p>
+                                <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = teacher.Id })" class="stretched-link"></a>
                             </div>
-                        }
-                    }
-                </div>
+                        </div>
+                    </div>
+                }
+            </div>
         }
     </div>
 </div>
@@ -49,7 +45,7 @@
 <div class="Orange">
     <h2 class="mb-4 mx-2">Public Tutors</h2>
     <!--If no teachers are found, display message-->
-    @if (Model.Count == 0)
+    @if (Model.PublicTeachers.Count == 0)
     {
         <p>No users of Role Teacher found.</p>
     }
@@ -58,7 +54,7 @@
     {
     <div class="container">
         <div class="row">
-                @foreach (var tutor in Model)
+                @foreach (var tutor in Model.PublicTeachers)
                 {
                     //Only display teachers that are availible
                     @if(tutor.Available == true)

@@ -30,20 +30,43 @@ namespace SAD.Controllers
 
         public async Task<IActionResult> TeacherScreenAsync()
         {
-
-            //Find the role
+            // Find the role
             var role = await _roleManager.FindByNameAsync("Tutor");
             if (role == null)
             {
                 return NotFound();
             }
 
-            //Get all users role
-            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+            // Get all users in the role
+            var usersInRole = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
 
-            //Return view with list of users
-            return View(usersInRole);
+
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Get the list of followed teachers for the current user
+            var followedTeachers = new List<CustomUserModel>();
+            if (currentUser != null)
+            {
+                var following = await _context.Follow.Where(f => f.FollowerId == currentUser.Id).ToListAsync();
+                foreach (var follow in following)
+                {
+                    var teacher = await _userManager.FindByIdAsync(follow.FollowingId);
+                    followedTeachers.Add(teacher);
+                }
+            }
+
+            // Create the view model
+            var viewModel = new TeacherScreenViewModel
+            {
+                PublicTeachers = usersInRole,
+                FollowedTeachers = followedTeachers
+            };
+
+            // Return the view with the view model
+            return View(viewModel);
         }
+
 
         public async Task<IActionResult> TeacherProfileScreen(string id)
         {
