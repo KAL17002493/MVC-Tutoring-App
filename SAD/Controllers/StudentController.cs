@@ -93,65 +93,65 @@ namespace SAD.Controllers
             var existingFollow = await _context.Follow.FirstOrDefaultAsync(f => f.FollowerId == currentUser.Id && f.FollowingId == teacherId);
             if (existingFollow != null)
             {
-                // User is already following the teacher, return an error message or redirect to the teacher profile page
+                // User is already following the teacher redirect to the teacher profile page
                 return RedirectToAction("TeacherProfileScreen", new { id = teacherId });
             }
 
-            // Create a new Follow object to represent the following relationship
+            //Create a new Follow object to represent the following relationship
             var follow = new FollowModel
             {
                 FollowerId = currentUser.Id,
                 FollowingId = teacherId
             };
 
-            // Save the new Follow object to the database
+            //Save the new Follow object to the database
             await _context.Follow.AddAsync(follow);
             await _context.SaveChangesAsync();
 
-            // Redirect to the teacher screen
+            //Redirect to the teacher screen
             return RedirectToAction("TeacherScreen");
         }
 
         //Display list of teachers that the user is following
         public async Task<IActionResult> FollowingTeachers()
         {
-            // Get the current user
+            //Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Get the list of Follow objects where the current user is the follower
+            //Get the list of Follow objects where the current user is the follower
             var following = await _context.Follow.Where(f => f.FollowerId == currentUser.Id).ToListAsync();
 
-            // Get the list of teacher profiles for the following relationships
+            //Get the list of teacher profiles for the following relationships
             var teachers = new List<CustomUserModel>();
             foreach (var follow in following)
             {
                 var teacher = await _userManager.FindByIdAsync(follow.FollowingId);
                 teachers.Add(teacher);
             }
-            // Return the list of teacher profiles to the view
+            //Return the list of teacher profiles to the view
             return View(teachers);
         }
 
         //Unfollow teacher
         public async Task<IActionResult> UnfollowTeacher(string teacherId)
         {
-            // Get the current user
+            //Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Get the Follow object representing the following relationship
+            //Get the Follow object representing the following relationship
             var follow = await _context.Follow.FirstOrDefaultAsync(f => f.FollowerId == currentUser.Id && f.FollowingId == teacherId);
             if (follow == null)
             {
-                // The following relationship does not exist, return an error message or redirect to the following teachers page
-                return RedirectToAction("FollowingTeachers");
+                //The following relationship does not exist redirect to TeacherScreen
+                return RedirectToAction("TeacherScreen");
             }
 
-            // Remove the Follow object from the database
+            //Remove the Follow object from the database
             _context.Follow.Remove(follow);
             await _context.SaveChangesAsync();
 
-            // Redirect to the following teachers page
-            return RedirectToAction("FollowingTeachers");
+            //Redirect to the following TeacherScreen
+            return RedirectToAction("TeacherScreen");
         }
 
 
