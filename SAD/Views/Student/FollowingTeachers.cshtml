@@ -1,0 +1,37 @@
+﻿@model List<CustomUserModel>
+
+<h1>Teachers You Are Following</h1>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>About</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td>@teacher.FName @teacher.SName</td>
+                    <td>@teacher.Email</td>
+                    <td>@teacher.About</td>
+                    <td>
+                        <form method="post" action="@Url.Action("UnfollowTeacher", "Student")">
+                            <input type="hidden" name="teacherId" value="@teacher.Id" />
+                            <button type="submit" class="btn btn-danger">Unfollow</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You are not following any teachers.</p>
+}

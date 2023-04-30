@@ -7,7 +7,7 @@ namespace SAD.Data
 {
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
-
+        public DbSet<FollowModel> Follow { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
