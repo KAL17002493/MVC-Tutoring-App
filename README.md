@@ -8,7 +8,7 @@ Tutors can be rated by paying students</br>
   <ul>
     <li>Cannot navigate to Admin area I have no idea why</li>
     <li>Footer is stuck at the bottom of the viewport not bottom of page, no idea how to fixe it I tried different mixes of footer CSS edit but nothing worked and deleting the footer makes is so no content is rendered</li>
-    <li>Cannot update TeacherProfile, I think TeacherModel.cs needs to be used but I've unable to make it work</li
+    <li>Not BROKNE but needs chaning, Unfollow button and follow button on TeacherProfile student side are present at the same time side by side, change that to only display one at a time</li>
   </ul>
 </h6>
 
@@ -20,5 +20,6 @@ Tutors can be rated by paying students</br>
   <ul>
     <li>Add a Student/ Teacher field to CustomUserModel to be used upon REGISTERING</li>
     <li>Cannot choose your role (Tutor/Student) upon registering, cannot figure out how to implement it properly</li>
+    <li>Cannot update TeacherProfile, I think TeacherModel.cs needs to be used but I've unable to make it work</li>
   </ul>
 </h6>
