@@ -26,6 +26,7 @@
     <!--Row 2-->
     <div class="row mt-5">
         <!--Column 1-->
+        <!--Follow Button-->
         <div class="col">
             <form method="post" action="@Url.Action("FollowTeacher", "Student")">
                 <input type="hidden" name="teacherId" value="@Model.Id" />
@@ -33,6 +34,7 @@
             </form>
         </div>
         <!--Column 2-->
+        <!--Unfollow Button-->
         <div class="col">
             <form method="post" action="@Url.Action("UnfollowTeacher", "Student")">
                 <input type="hidden" name="teacherId" value="@Model.Id" />
