@@ -20,6 +20,11 @@
             <div class="mb-1">
                 <textarea id="About" name="About" class="form-control" rows="3" placeholder="Write stuff here" disabled>@Model.About</textarea>
             </div>
+
+            <div>
+                <a href="@Url.Action("Index", "Public",  new { id = Model.Id })" class="btn btn-success w-100">Book Lessons</a>
+            </div>
+
         </div>
     </div>
 

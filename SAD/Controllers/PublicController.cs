@@ -1,12 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SAD.Data;
+using SAD.Models;
+using System.Security.Claims;
 
 namespace SAD.Controllers
 {
     public class PublicController : Controller
     {
-        //List of dates for the current month to be passed to the view
-        public IActionResult Index()
+        private readonly UserManager<CustomUserModel> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        private readonly ApplicationDbContext _context;
+
+        public PublicController(UserManager<CustomUserModel> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _context = context;
+        }
+
+        //List of dates for the current month to be passed to the view
+        public async Task<IActionResult> Index(string id)
+        {
+            //Get teacher by ID
+            var teacherProfile = await _userManager.FindByIdAsync(id);
+
+            //Check if teacher exists
+            if (teacherProfile == null)
+            {
+                return NotFound();
+            }
+
             //Get the current date
             DateTime currentDate = DateTime.Now;
 
@@ -23,13 +48,20 @@ namespace SAD.Controllers
                 dates.Add(firstDayOfMonth.AddDays(i));
             }
 
-            //Pass the list of dates to the view
+            //Pass the list of dates and the teacherProfile to the view
+            ViewBag.TeacherProfile = teacherProfile;
             return View(dates);
         }
 
-        public IActionResult DayView(DateTime date)
+
+
+        public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date)
         {
-            //Create a list of periods for the selected date
+                 var tutorAvailability = _context.TutorAvailabilities
+                .Where(a => a.TutorId == tutorId && a.Start.Date == date.Date)
+                .ToList();
+
+            // Create a list of periods for the selected date
             List<DateTime> timeIntervals = new List<DateTime>();
             //Loops from 0 to 23
             for (int i = 0; i < 24; i++)
@@ -38,9 +70,20 @@ namespace SAD.Controllers
                 timeIntervals.Add(start);
             }
 
-            //Pass the list of periods and the selected date to the view
+            //Pass the list of periods, the selected date, and the tutor's availability data to the view
             ViewBag.SelectedDate = date;
+            ViewBag.TutorAvailability = tutorAvailability;
             return View(timeIntervals);
         }
+
+        public IActionResult BookSlot()
+        {
+            return View();
+        }
+
+
+
+        //BOOKING SECTION
+
     }
 }

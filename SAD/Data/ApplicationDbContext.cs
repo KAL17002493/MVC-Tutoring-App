@@ -8,6 +8,7 @@ namespace SAD.Data
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
         public DbSet<FollowModel> Follow { get; set; }
+        public DbSet<TutorAvailability> TutorAvailabilities { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
