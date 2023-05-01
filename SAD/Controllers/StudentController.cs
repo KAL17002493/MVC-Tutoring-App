@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAD.Data;
@@ -8,7 +9,7 @@ using SAD.Models;
 namespace SAD.Controllers
 {
 
-    //[Authorize(Roles = "Student, Admin")]
+    [Authorize(Roles = "Student, Admin")]
     public class StudentController : Controller
     {
         private readonly UserManager<CustomUserModel> _userManager;
