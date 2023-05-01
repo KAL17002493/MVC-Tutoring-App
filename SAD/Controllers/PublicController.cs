@@ -55,9 +55,9 @@ namespace SAD.Controllers
 
 
 
-        public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date)
+        public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date, DateTime timeInterval)
         {
-                 var tutorAvailability = _context.TutorAvailabilities
+            var tutorAvailability = _context.TutorAvailabilities
                 .Where(a => a.TutorId == tutorId && a.Start.Date == date.Date)
                 .ToList();
 
@@ -70,16 +70,20 @@ namespace SAD.Controllers
                 timeIntervals.Add(start);
             }
 
-            //Pass the list of periods, the selected date, and the tutor's availability data to the view
+            //Pass the list of periods, the selected date, and the selected time interval to the view
             ViewBag.SelectedDate = date;
             ViewBag.TutorAvailability = tutorAvailability;
+            ViewBag.SelectedTimeInterval = timeInterval;
             return View(timeIntervals);
         }
 
-        public IActionResult BookSlot()
+        public IActionResult BookSlot(DateTime timeIntervals)
         {
+            ViewBag.TimeIntervals = timeIntervals;
             return View();
         }
+
+
 
 
 
