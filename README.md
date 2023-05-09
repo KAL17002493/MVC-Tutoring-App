@@ -23,3 +23,10 @@ Tutors can be rated by paying students</br>
     <li>Cannot update TeacherProfile, I think TeacherModel.cs needs to be used but I've unable to make it work</li>
   </ul>
 </h6>
+
+<h2>Note</h2>
+<h6>
+  <ul>
+    <li>DayView.cshtml implementation has the potential of not working in other time zoned because of "timeIntervals.Day == DateTime.Now.Day" part</li>
+  </ul>
+</h6>
