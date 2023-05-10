@@ -9,9 +9,8 @@ namespace SAD.Data
     {
         public DbSet<FollowModel> Follow { get; set; }
         public DbSet<TutorAvailability> TutorAvailabilities { get; set; }
-
-        //Not sure if needed has not been added to database
         public DbSet<BookingModel> Booking { get; set; }
+        public DbSet<SlotModel> Slot { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

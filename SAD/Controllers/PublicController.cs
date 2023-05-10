@@ -58,15 +58,21 @@ namespace SAD.Controllers
         public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date, DateTime timeInterval)
         {
        
-
-            //Create a list of periods for the selected date
-            List<DateTime> timeIntervals = new List<DateTime>();
+            List<SlotModel> timeIntervals = new List<SlotModel>();
             //Loops from 0 to 23
             for (int i = 0; i < 24; i++)
             {
                 DateTime start = date.Date.AddHours(i);
-                timeIntervals.Add(start);
+                string id = start.Ticks.ToString() + tutorId;
+                bool isAvailable = !_context.Booking.Any(x => x.Id == id);
+                timeIntervals.Add(new SlotModel()
+                {
+                    IsAvailable = isAvailable,
+                    SlotTime = start,
+                });
             }
+
+            var bookings = _context.Booking.ToList();
 
             //Pass the list of periods, the selected date, and the selected time interval to the view
             ViewBag.tutorId = tutorId;
@@ -78,30 +84,38 @@ namespace SAD.Controllers
         //BOOKING SECTION
         public async Task<IActionResult> BookSlot(DateTime timeIntervals, string tutorId)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             //Check if tutor exists by ID
-            if(tutorId == null)
+            if (tutorId == null)
             {
                 return NotFound();
             }
 
+            string id = String.Concat(timeIntervals.Ticks.ToString(), tutorId);
+
             //Creates new sintance of BookingModel
             BookingModel bookingModel = new BookingModel()
             {
-                Id = timeIntervals.Ticks + tutorId,
-                TutorId = await _userManager.FindByIdAsync(tutorId),
-                StudentId = await _userManager.GetUserAsync(User),
+                Id = id,
+                TutorId = tutorId,
+                StudentId = user.Id,
                 TimeSlot = timeIntervals,
                 Status = Enums.BookingStatus.Pending
             };
 
-            ViewData["tutorId"] = tutorId;
             return View(bookingModel);
         }
 
         [HttpPost]
-        public IActionResult BookSlot(BookingModel booking)
+        public async Task<IActionResult> BookSlot(BookingModel booking)
         {
-            return View(booking);
+            booking.Status = Enums.BookingStatus.Booked;
+            var result = await _context.Booking.AddAsync(booking);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("TeacherScreen", "Student");
         }
 
     }

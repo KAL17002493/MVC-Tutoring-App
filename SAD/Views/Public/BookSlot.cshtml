@@ -3,6 +3,13 @@
 <h1>Book Slot</h1>
 
 <form asp-action="BookSlot" method="post">
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.TutorId)
+    @Html.HiddenFor(model => model.StudentId)
+    @Html.HiddenFor(model => model.TimeSlot)
+    @Html.HiddenFor(model => model.Status)
     <button type="submit" class="btn-primary w-100">Book</button>
 </form>
+
+
 

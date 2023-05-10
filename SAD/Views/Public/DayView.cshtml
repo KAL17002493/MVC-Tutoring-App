@@ -1,46 +1,92 @@
-﻿@model List<DateTime>
+﻿@model List<SlotModel>
 
 <h1>@ViewBag.SelectedDate.ToString("MMMM yyyy")</h1>
 <h3 class="mb-5">@ViewBag.SelectedDate.ToString("D")</h3>
 <div class="row">
-    @foreach (var timeIntervals in Model)
+    @foreach (var slot in Model)
     {
         <!--Check if time is now and changes colour to green-->
-        if (timeIntervals.Hour == DateTime.Now.Hour && timeIntervals.Day == DateTime.Now.Day)
+        if (slot.SlotTime.Hour == DateTime.Now.Hour && slot.SlotTime.Day == DateTime.Now.Day)
         {
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-            <div class="card cardToday">
-                <div class="card-body">
-                    <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = timeIntervals, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
-                </div>
-            </div>
-        </div>
-        }
-        //Times that are gone and changes colour to grey
-        else if(timeIntervals < DateTime.Now)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                <div class="card cardOld">
-                    <div class="card-body">
-                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = timeIntervals, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+            if (slot.IsAvailable)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card cardToday">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
+                            <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card bg-danger">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+        //Times that are gone and changes colour to grey
+        else if (slot.SlotTime < DateTime.Now)
+        {
+            if (slot.IsAvailable)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card cardOld">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card bg-danger">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
         }
         //Times to come and keep colour white
         else
         {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                                <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = timeIntervals,  tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+            if (slot.IsAvailable)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
+                            <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime,  tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+                    <div class="card bg-danger">
+                        <div class="card-body">
+                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
+
+                        </div>
+                    </div>
+                </div>
+            }
         }
 
     }
-        </div>
+</div>
