@@ -10,6 +10,9 @@ namespace SAD.Data
         public DbSet<FollowModel> Follow { get; set; }
         public DbSet<TutorAvailability> TutorAvailabilities { get; set; }
 
+        //Not sure if needed has not been added to database
+        public DbSet<BookingModel> Booking { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
@@ -121,7 +124,7 @@ namespace SAD.Data
             builder.Entity<CustomUserModel>().HasData(user);
         }
 
-        //Give admin user it's admin role
+        //Give users their roles
         private void SeedUserRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityUserRole<string>>().HasData(

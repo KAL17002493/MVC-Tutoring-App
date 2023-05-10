@@ -57,11 +57,9 @@ namespace SAD.Controllers
 
         public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date, DateTime timeInterval)
         {
-            var tutorAvailability = _context.TutorAvailabilities
-                .Where(a => a.TutorId == tutorId && a.Start.Date == date.Date)
-                .ToList();
+       
 
-            // Create a list of periods for the selected date
+            //Create a list of periods for the selected date
             List<DateTime> timeIntervals = new List<DateTime>();
             //Loops from 0 to 23
             for (int i = 0; i < 24; i++)
@@ -71,23 +69,34 @@ namespace SAD.Controllers
             }
 
             //Pass the list of periods, the selected date, and the selected time interval to the view
+            ViewBag.tutorId = tutorId;
             ViewBag.SelectedDate = date;
-            ViewBag.TutorAvailability = tutorAvailability;
-            ViewBag.SelectedTimeInterval = timeInterval;
             return View(timeIntervals);
         }
 
-        public IActionResult BookSlot(DateTime timeIntervals)
-        {
-            ViewBag.TimeIntervals = timeIntervals;
-            return View();
-        }
-
-
-
-
 
         //BOOKING SECTION
+        public async Task<IActionResult> BookSlot(DateTime timeIntervals, string tutorId)
+        {
+
+            BookingModel bookingModel = new BookingModel()
+            {
+                Id = timeIntervals.Ticks + tutorId,
+                TutorId = await _userManager.FindByIdAsync(tutorId), //Check if user exsists
+                StudentId = await _userManager.GetUserAsync(User),
+                TimeSlot = timeIntervals,
+                Status = Enums.BookingStatus.Pending
+            };
+
+            return View(bookingModel);
+        }
+
+        [HttpPost]
+        public IActionResult BookSlot(BookingModel booking)
+        {
+           
+            return View(booking);
+        }
 
     }
 }

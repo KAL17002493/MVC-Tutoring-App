@@ -1,2 +1,7 @@
-﻿<h1>Book Slot</h1>
-<p>Would you like to book a slot for @ViewBag.TimeIntervals.ToString("HH:mm") on @ViewBag.TimeIntervals.ToString("MMMM dd")?</p>
+﻿@model BookingModel
+
+<h1>Book Slot</h1>
+
+<form asp-action="BookSlot" method="post">
+    <button type="submit" class="btn-primary w-100" >Book</button>
+</form>
