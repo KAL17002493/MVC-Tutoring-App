@@ -78,23 +78,29 @@ namespace SAD.Controllers
         //BOOKING SECTION
         public async Task<IActionResult> BookSlot(DateTime timeIntervals, string tutorId)
         {
+            //Check if tutor exists by ID
+            if(tutorId == null)
+            {
+                return NotFound();
+            }
 
+            //Creates new sintance of BookingModel
             BookingModel bookingModel = new BookingModel()
             {
                 Id = timeIntervals.Ticks + tutorId,
-                TutorId = await _userManager.FindByIdAsync(tutorId), //Check if user exsists
+                TutorId = await _userManager.FindByIdAsync(tutorId),
                 StudentId = await _userManager.GetUserAsync(User),
                 TimeSlot = timeIntervals,
                 Status = Enums.BookingStatus.Pending
             };
 
+            ViewData["tutorId"] = tutorId;
             return View(bookingModel);
         }
 
         [HttpPost]
         public IActionResult BookSlot(BookingModel booking)
         {
-           
             return View(booking);
         }
 

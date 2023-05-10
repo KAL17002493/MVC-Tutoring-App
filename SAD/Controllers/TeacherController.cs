@@ -49,7 +49,7 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            //Check if the About field is null or empty, and set it to an empty string if it is to avoid errors when saving to database
+            //Check if the About field is null or empty, and set it to an empty string to avoid errors when saving to database
             user.About = string.IsNullOrEmpty(model.About) ? string.Empty : model.About;
 
             await _userManager.UpdateAsync(user);
