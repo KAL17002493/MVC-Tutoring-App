@@ -7,7 +7,7 @@
     @foreach (var timeIntervals in Model)
     {
         <!--Check if time is now and changes colour to green-->
-        if (timeIntervals.Hour == DateTime.Now.Hour)
+        if (timeIntervals.Hour == DateTime.Now.Hour && timeIntervals.Day == DateTime.Now.Day)
         {
         <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
             <div class="card cardToday">
