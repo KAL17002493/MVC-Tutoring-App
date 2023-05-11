@@ -80,9 +80,23 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            //Pass the teacher model to view
-            return View(teacherProfile);
+            //Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            //Check if the user is already following the teacher
+            var isFollowing = await _context.Follow.AnyAsync(f => f.FollowerId == currentUser.Id && f.FollowingId == teacherProfile.Id);
+
+            //Pass the teacher model and the following status to the view
+            var viewModel = new TeacherProfileViewModel
+            {
+                Teacher = teacherProfile,
+                IsFollowing = isFollowing
+            };
+
+            // Pass the teacher model to the view
+            return View(viewModel);
         }
+
 
         //Follow new teacher
         public async Task<IActionResult> FollowTeacher(string teacherId)

@@ -1,4 +1,4 @@
-﻿@model CustomUserModel
+﻿@model TeacherProfileViewModel
 
 <div class="container Orange">
     <!--Row 1-->
@@ -9,8 +9,8 @@
                 <img src="https://d.newsweek.com/en/full/1920025/cat-its-mouth-open.jpg?w=1600&h=1600&q=88&f=b7a44663e082b8041129616b6b73328d" class="rounded roundImage" alt="...">
             </div>
             <div class="mt-4">
-                <h4>@Model.FName @Model.SName</h4>
-                <h4>@Model.Email</h4>
+                <h4>@Model.Teacher.FName @Model.Teacher.SName</h4>
+                <h4>@Model.Teacher.Email</h4>
             </div>
         </div>
 
@@ -18,12 +18,10 @@
         <div class="col">
             <h3>About</h3>
             <div class="mb-1">
-                <textarea id="About" name="About" class="form-control" rows="3" placeholder="Write stuff here" disabled>@Model.About</textarea>
+                <textarea id="About" name="About" class="form-control" rows="3" placeholder="Write stuff here" disabled>@Model.Teacher.About</textarea>
             </div>
 
-            <div>
-                <a href="@Url.Action("Index", "Public",  new { id = Model.Id })" class="btn btn-success w-100">Book Lessons</a>
-            </div>
+
 
         </div>
     </div>
@@ -31,20 +29,32 @@
     <!--Row 2-->
     <div class="row mt-5">
         <!--Column 1-->
+        <!--Unfollow Button-->
+        <div class="col-md-6">
+        @if(Model.IsFollowing)
+        {
+                <form method="post" action="@Url.Action("UnfollowTeacher", "Student")">
+                    <input type="hidden" name="teacherId" value="@Model.Teacher.Id" />
+                    <button type="submit" class="btn btn-danger w-100">Unfollow</button>
+                </form>
+
+        }
+        else
+        {
         <!--Follow Button-->
-        <div class="col">
             <form method="post" action="@Url.Action("FollowTeacher", "Student")">
-                <input type="hidden" name="teacherId" value="@Model.Id" />
+                <input type="hidden" name="teacherId" value="@Model.Teacher.Id" />
                 <button type="submit" class="btn btn-primary flex-fill w-100">Follow</button>
             </form>
+        
+        }
         </div>
         <!--Column 2-->
-        <!--Unfollow Button-->
-        <div class="col">
-            <form method="post" action="@Url.Action("UnfollowTeacher", "Student")">
-                <input type="hidden" name="teacherId" value="@Model.Id" />
-                <button type="submit" class="btn btn-danger w-100">Unfollow</button>
-            </form>
+        <div class="col-md-6">
+            <div>
+                <a href="@Url.Action("Index", "Public",  new { id = Model.Teacher.Id })" class="btn btn-success w-100">Book Lessons</a>
+            </div>
         </div>
+
     </div>
 </div>

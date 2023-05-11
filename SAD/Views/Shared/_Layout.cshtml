@@ -23,9 +23,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <!--Public Nav Options HERE-->
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Public" asp-action="Index">Calendar</a>
-                        </li>
+
                         <!--Tutors Nav bar options-->
                         @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {
@@ -41,6 +39,9 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Student" asp-action="TeacherScreen">Teacher Screen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Student" asp-action="BookedLessons">My Lessons</a>
                             </li>
                         }
                         <!--Admin Nav bar options-->
