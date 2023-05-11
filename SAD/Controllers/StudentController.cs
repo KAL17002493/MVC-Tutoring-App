@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SAD.Data;
 using SAD.Migrations;
 using SAD.Models;
+using static SAD.Models.Enums;
 
 namespace SAD.Controllers
 {
@@ -183,6 +184,30 @@ namespace SAD.Controllers
             // Return the list of lessons to the view
             return View(lessons);
         }
+
+        public async Task<IActionResult> CancelLesson(string lessonId)
+        {
+            //Retrieve the lesson from the database based on the provided lessonId
+            var lesson = await _context.Booking.FindAsync(lessonId);
+
+            //Check if the lesson exists
+            if (lesson == null)
+            {
+                return NotFound();
+            }
+
+            //Update the status of the lesson to "Cancelled"
+            lesson.Status = BookingStatus.Cancelled;
+
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+            //Redirect to the BookedLessons view
+            return RedirectToAction("BookedLessons");
+        }
+
+
+
 
 
 

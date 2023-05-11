@@ -13,6 +13,18 @@ html {
   }
 }
 
+/*Makes the row height all the same on BookedLessons View*/
+.booking-table td {
+    height: 50px; /* Adjust the height value as needed */
+    vertical-align: middle;
+}
+
+/*Reduces white space in action column on BookedLessons View*/
+.booking-table td.actions {
+        width: 1%;
+        white-space: nowrap;
+    }
+
 /*Changes the size of calendar cards*/
 @media (min-width: 992px) {
     .calCard {

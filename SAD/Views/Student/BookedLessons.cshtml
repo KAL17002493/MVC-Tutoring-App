@@ -2,7 +2,7 @@
 
 <div class="container">
     <h1>Booked Lessons</h1>
-    <table class="table table-bordered">
+    <table class="table table-bordered booking-table">
         <thead>
             <tr>
                 <th>Tutor</th>
@@ -20,7 +20,18 @@
                     <td>@booking.TimeSlot.ToShortDateString()</td>
                     <td>@booking.TimeSlot.ToShortTimeString()</td>
                     <td>@booking.Status</td>
-                    <td></td>
+                    <td class="actions">
+                        <div class="d-flex">
+                            @if (booking.Status == Enums.BookingStatus.Booked)
+                            {
+                                <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
+                                    <input type="hidden" name="lessonId" value="@booking.Id" />
+                                    <button type="submit" class="btn btn-danger">Cancel Lesson</button>
+                                </form>
+                            }
+                            <!-- Add more buttons here if needed -->
+                        </div>
+                    </td>
                 </tr>
             }
         </tbody>
