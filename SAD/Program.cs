@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SAD.Data;
 using SAD.Models;
+using SAD.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddIdentity<CustomUserModel, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
+//CUSTOM SERVICES, register SlotService as a service
+builder.Services.AddTransient<SlotService>();
 
 var app = builder.Build();
 

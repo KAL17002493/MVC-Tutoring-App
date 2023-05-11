@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SAD.Data;
 using SAD.Models;
+using SAD.Services;
 using System.Security.Claims;
 
 namespace SAD.Controllers
@@ -10,14 +11,15 @@ namespace SAD.Controllers
     {
         private readonly UserManager<CustomUserModel> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
         private readonly ApplicationDbContext _context;
+        private readonly SlotService _slotService;
 
-        public PublicController(UserManager<CustomUserModel> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+        public PublicController(UserManager<CustomUserModel> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, SlotService slotService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
+            _slotService = slotService;
         }
 
         //List of dates for the current month to be passed to the view
@@ -65,10 +67,15 @@ namespace SAD.Controllers
                 DateTime start = date.Date.AddHours(i);
                 string id = start.Ticks.ToString() + tutorId;
                 bool isAvailable = !_context.Booking.Any(x => x.Id == id);
+                bool isToday = start.Hour == DateTime.Now.Hour && start.Day == DateTime.Now.Day;
+                bool isOld = start < DateTime.Now;
+
                 timeIntervals.Add(new SlotModel()
                 {
                     IsAvailable = isAvailable,
                     SlotTime = start,
+                    //Calls the GetCardColor method from the SlotService class to determine the CSS class for the card
+                    CardColour = _slotService.GetCardColor(isAvailable, isToday, isOld)
                 });
             }
 

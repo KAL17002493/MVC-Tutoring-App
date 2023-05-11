@@ -5,88 +5,27 @@
 <div class="row">
     @foreach (var slot in Model)
     {
-        <!--Check if time is now and changes colour to green-->
-        if (slot.SlotTime.Hour == DateTime.Now.Hour && slot.SlotTime.Day == DateTime.Now.Day)
-        {
-            if (slot.IsAvailable)
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card cardToday">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
-                            <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
-                        </div>
-                    </div>
+        string time = slot.SlotTime.ToString("HH:mm");
+        bool isAvailable = slot.IsAvailable;
+        bool isOld = slot.SlotTime < DateTime.Now;
+
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+            <div class="@slot.CardColour">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <!--If Booken outputs text-->
+                        @time @if (!isAvailable)
+                        {
+                            <text>(Booked)</text>
+                        }
+                    </h5>
+                    <!--If available and not is not now creates clickable link-->
+                    @if (isAvailable && !isOld)
+                    {
+                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = time, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                    }
                 </div>
-            }
-            else
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card bg-danger">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
-
-                        </div>
-                    </div>
-                </div>
-            }
-
-        }
-
-        //Times that are gone and changes colour to grey
-        else if (slot.SlotTime < DateTime.Now)
-        {
-            if (slot.IsAvailable)
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card cardOld">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
-
-                        </div>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card bg-danger">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
-
-                        </div>
-                    </div>
-                </div>
-
-            }
-        }
-        //Times to come and keep colour white
-        else
-        {
-            if (slot.IsAvailable)
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm")</h5>
-                            <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime,  tutorId = ViewBag.tutorId})" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-            }
-            else
-            {
-
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                    <div class="card bg-danger">
-                        <div class="card-body">
-                            <h5 class="card-title">@slot.SlotTime.ToString("HH:mm") (Booked)</h5>
-
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-
+            </div>
+        </div>
     }
 </div>

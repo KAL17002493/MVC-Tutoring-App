@@ -8,5 +8,6 @@ namespace SAD.Models
         public int SlotId { get; set; }
         public bool IsAvailable { get; set; }
         public DateTime SlotTime { get; set; }
+        public string CardColour { get; set; }
     }
 }
