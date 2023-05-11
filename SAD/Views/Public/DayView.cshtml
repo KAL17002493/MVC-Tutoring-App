@@ -19,10 +19,10 @@
                             <text>(Booked)</text>
                         }
                     </h5>
-                    <!--If available and not is not now creates clickable link-->
+                    <!--If available and not is not old date creates clickable link-->
                     @if (isAvailable && !isOld)
                     {
-                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = time, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
                     }
                 </div>
             </div>

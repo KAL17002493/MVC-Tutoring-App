@@ -59,24 +59,25 @@ namespace SAD.Controllers
 
         public async Task<IActionResult> DayViewAsync(string tutorId, DateTime date, DateTime timeInterval)
         {
-       
             List<SlotModel> timeIntervals = new List<SlotModel>();
             //Loops from 0 to 23
             for (int i = 0; i < 24; i++)
             {
                 DateTime start = date.Date.AddHours(i);
                 string id = start.Ticks.ToString() + tutorId;
-                bool isAvailable = !_context.Booking.Any(x => x.Id == id);
-                bool isToday = start.Hour == DateTime.Now.Hour && start.Day == DateTime.Now.Day;
+                bool isAvailable = !_context.Booking.Any(x => x.TimeSlot.Date == start.Date && x.TimeSlot.Hour == start.Hour && x.TutorId == tutorId);
+                bool isToday = start.Date == DateTime.Now.Date && start.Hour == DateTime.Now.Hour;
                 bool isOld = start < DateTime.Now;
 
-                timeIntervals.Add(new SlotModel()
+                var slot = new SlotModel()
                 {
                     IsAvailable = isAvailable,
                     SlotTime = start,
                     //Calls the GetCardColor method from the SlotService class to determine the CSS class for the card
                     CardColour = _slotService.GetCardColor(isAvailable, isToday, isOld)
-                });
+                };
+
+                timeIntervals.Add(slot);
             }
 
             var bookings = _context.Booking.ToList();
@@ -86,6 +87,9 @@ namespace SAD.Controllers
             ViewBag.SelectedDate = date;
             return View(timeIntervals);
         }
+
+
+
 
 
         //BOOKING SECTION

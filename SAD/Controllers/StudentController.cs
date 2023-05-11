@@ -169,6 +169,22 @@ namespace SAD.Controllers
             return RedirectToAction("TeacherScreen");
         }
 
+        public async Task<IActionResult> BookedLessons()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Get the list of lessons where the current user is the student and include the Tutor information
+            var lessons = await _context.Booking
+                .Include(b => b.Tutor)
+                .Where(b => b.StudentId == currentUser.Id)
+                .ToListAsync();
+
+            // Return the list of lessons to the view
+            return View(lessons);
+        }
+
+
 
 
     }
