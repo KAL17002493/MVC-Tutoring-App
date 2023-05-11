@@ -92,6 +92,48 @@ body {
     padding: 20px;
 }
 
+/***********TEACHERSCREEN VIEW***********/
+.card {
+    height: 100%;
+}
+
+.myTeacher-card,
+.publicTeacher-card {
+    height: 100%;
+}
+
+    .myTeacher-card .card-body,
+    .publicTeacher-card .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .myTeacher-card h5,
+    .publicTeacher-card h5 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .myTeacher-card p,
+    .publicTeacher-card p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.pagination-number {
+    font-size: 20px; /* Adjust the font size as needed */
+}
+
+/*Disabled Previous and Back buttons*/
+a.disabled {
+    pointer-events: none;
+    color: grey;
+}
+
+
 /***********BOOKEDLESSONS VIEW***********/
 /*Makes the row height all the same*/
 .booking-table td {
