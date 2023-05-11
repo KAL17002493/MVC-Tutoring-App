@@ -49,19 +49,14 @@
     {
         <p>No users of Role Teacher found.</p>
     }
-    //Display all availible teachers
     else
     {
-    <div class="container">
-        <div class="row">
+        <div class="container">
+            <div class="row">
                 @foreach (var tutor in Model.PublicTeachers)
                 {
-                    //Only display teachers that are availible
-                    @if (tutor.Available == true && !Model.FollowedTeachers.Any(ft => ft.Id == tutor.Id))
-                    {
-                    //Direct user to teacher profile screen by clicking on card
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                        <div class="card myTeacher-card">
+                        <div class="card publicTeacher-card">
                             <div class="card-body">
                                 <h5>@tutor.FName @tutor.SName</h5>
                                 <p>@tutor.Email</p>
@@ -69,9 +64,18 @@
                             </div>
                         </div>
                     </div>
-                    }
                 }
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--Pagination (Creates page links at the bottom of the section)-->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <a href="@Url.Action("TeacherScreen", "Student", new { page = i })">@i</a>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
     }
 </div>
+

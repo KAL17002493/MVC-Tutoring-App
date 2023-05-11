@@ -30,18 +30,17 @@ namespace SAD.Controllers
             return View();
         }
 
-        public async Task<IActionResult> TeacherScreenAsync()
+        public async Task<IActionResult> TeacherScreenAsync(int page = 1)
         {
-            // Find the role
+            //Number of tutors per page
+            int pageSize = 8; 
+
+            //Find all tutors by role
             var role = await _roleManager.FindByNameAsync("Tutor");
             if (role == null)
             {
                 return NotFound();
             }
-
-            // Get all users in the role
-            var usersInRole = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
-
 
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
@@ -58,17 +57,31 @@ namespace SAD.Controllers
                 }
             }
 
-            // Create the view model
+            //Get all users in the role
+            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
+
+            //Exclude teacher whom the user is already following and teachers who are not available
+            var publicTeachers = allTutors.Where(t => t.Available && !followedTeachers.Any(ft => ft.Id == t.Id)).ToList();
+
+            //Get the total count of public teachers
+            var totalPublicTeachers = publicTeachers.Count;
+
+            //Get the current page of public teachers
+            publicTeachers = publicTeachers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            //Create the view model instance
             var viewModel = new TeacherScreenViewModel
             {
-                PublicTeachers = usersInRole,
-                FollowedTeachers = followedTeachers
+                PublicTeachers = publicTeachers,
+                FollowedTeachers = followedTeachers,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(totalPublicTeachers / (double)pageSize)
             };
 
-            // Return the view with the view model
+            //Return data to the view
             return View(viewModel);
-        }
 
+        }
 
         public async Task<IActionResult> TeacherProfileScreen(string id)
         {
