@@ -50,11 +50,13 @@
         }
         </div>
         <!--Column 2-->
+        @if(Model.IsFollowing)
+        {
         <div class="col-md-6">
             <div>
                 <a href="@Url.Action("Index", "Public",  new { id = Model.Teacher.Id })" class="btn btn-success w-100">Book Lessons</a>
             </div>
         </div>
-
+        }
     </div>
 </div>

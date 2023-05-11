@@ -13,17 +13,7 @@ html {
   }
 }
 
-/*Makes the row height all the same on BookedLessons View*/
-.booking-table td {
-    height: 50px; /* Adjust the height value as needed */
-    vertical-align: middle;
-}
 
-/*Reduces white space in action column on BookedLessons View*/
-.booking-table td.actions {
-        width: 1%;
-        white-space: nowrap;
-    }
 
 /*Changes the size of calendar cards*/
 @media (min-width: 992px) {
@@ -101,6 +91,25 @@ body {
     background-color: rgb(0,130,189, .5);
     padding: 20px;
 }
+
+/***********BOOKEDLESSONS VIEW***********/
+/*Makes the row height all the same*/
+.booking-table td {
+    height: 50px; /* Adjust the height value as needed */
+    vertical-align: middle;
+}
+
+    /*Reduces white space in action column*/
+    .booking-table td.actions {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+/*Make the bottom line of each row bolder*/
+.booking-table tbody tr {
+    border-bottom: 1px solid #000;
+}
+
 /*TESTING GROUNDS*/
 /*Animation test*/
 @keyframes fadeIn {

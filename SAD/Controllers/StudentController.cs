@@ -197,7 +197,10 @@ namespace SAD.Controllers
             }
 
             //Update the status of the lesson to "Cancelled"
-            lesson.Status = BookingStatus.Cancelled;
+            //lesson.Status = BookingStatus.Cancelled;
+
+            // Remove the lesson from the context
+            _context.Booking.Remove(lesson);
 
             // Save the changes to the database
             await _context.SaveChangesAsync();
