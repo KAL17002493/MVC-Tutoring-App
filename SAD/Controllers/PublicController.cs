@@ -25,6 +25,7 @@ namespace SAD.Controllers
         //List of dates for the current month to be passed to the view
         public async Task<IActionResult> Index(string id)
         {
+
             //Get teacher by ID
             var teacherProfile = await _userManager.FindByIdAsync(id);
 

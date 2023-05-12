@@ -29,10 +29,13 @@
                         @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="Index">|| Lessons</a>
+                                <a class="nav-link" asp-area="" asp-controller="Public" asp-action="Index">Calendar</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="TeacherProfile">Teacher Profile</a>
+                                <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="TeacherProfile">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="TeacherProfile">Bookings</a>
                             </li>
                         }
                         <!--Students Nav bar options-->

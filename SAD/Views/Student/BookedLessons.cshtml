@@ -17,9 +17,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var booking in Model)
+                    <!--Order rows by earliest time slot-->
+                    @foreach (var booking in Model.OrderBy(b => b.TimeSlot))
                     {
-                        @if(@booking.TimeSlot < DateTime.Now)
+                        //Rows which are in the past, turn them grey, disable button
+                        @if (@booking.TimeSlot < DateTime.Now)
                         {
                             <tr class="cardOld">
                                 <td class="align-middle">@booking.Tutor.FName @booking.Tutor.SName</td>
@@ -28,6 +30,7 @@
                                 <td class="align-middle">@booking.Status</td>
                                 <td class="actions align-middle">
                                     <div class="d-flex">
+                                        <!--Button to cancel lesson, but this button has been disabled-->
                                         @if (booking.Status == Enums.BookingStatus.Booked)
                                         {
                                             <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
@@ -35,12 +38,12 @@
                                                 <button type="submit" class="btn btn-secondary disabled">Cancel Lesson</button>
                                             </form>
                                         }
-                                        <!-- Add more buttons here if needed -->
                                     </div>
                                 </td>
                             </tr>
                         }
                         else
+                        //Rows which have not passed yet
                         {
                             <tr>
                                 <td class="align-middle">@booking.Tutor.FName @booking.Tutor.SName</td>
@@ -49,6 +52,7 @@
                                 <td class="align-middle">@booking.Status</td>
                                 <td class="actions align-middle">
                                     <div class="d-flex">
+                                        <!--Button to cancel lesson-->
                                         @if (booking.Status == Enums.BookingStatus.Booked)
                                         {
                                             <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
@@ -56,7 +60,6 @@
                                                 <button type="submit" class="btn btn-danger">Cancel Lesson</button>
                                             </form>
                                         }
-                                        <!-- Add more buttons here if needed -->
                                     </div>
                                 </td>
                             </tr>
@@ -71,3 +74,4 @@
         <p class="mt-5 fw-bold fs-5">You do not have any bookings.</p>
     }
 </div>
+
