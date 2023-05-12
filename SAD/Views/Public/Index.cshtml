@@ -1,5 +1,6 @@
 ﻿@model List<DateTime>
 
+
 <h1>@Model[0].ToString("MMMM yyyy")</h1>
 
 <div class="container">
@@ -10,7 +11,7 @@
             @if (date == DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id })">
                         <div class="card mb-3 calCard cardToday">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>
@@ -25,7 +26,7 @@
             else if (date < DateTime.Today)
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id  })">
                         <div class="card mb-3 calCard cardOld">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>
@@ -39,7 +40,7 @@
             else
             {
                 <div class="col-sm-4 col-md-3 col-lg-2">
-                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd") })">
+                    <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id  })">
                         <div class="card mb-3 calCard">
                             <div class="card-body">
                                 <h5 class="card-title">@date.Day</h5>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SAD.Data;
 
@@ -10,9 +11,10 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510143717_addToDbContext")]
+    partial class addToDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
@@ -309,13 +311,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDvBfXq2MyAapz2dNDYCPzciawasIa/kCGkg/xV+aX33aJB4fc0JEyEybwrGaYKu3Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECRL208GjHUYQdRtLbKGqg5NpeWb3Tf+UDod30AUh1w3/DuFqhNrsWQYF1R0jURcKg==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "3de8ff7f-79ca-4ccf-9fa4-fe252ef589d3",
+                            SecurityStamp = "33c9a5ad-9597-4311-b540-e6e43eeaa9fd",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
-                            teacherCode = "4836b4eb-5d3f-4286-ad47-cf9f26433370"
+                            teacherCode = "165db2cf-6ab4-4d5b-b4d1-352e51dd9f45"
                         },
                         new
                         {
@@ -330,13 +332,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT@STUDENT.COM",
                             NormalizedUserName = "STUDENT@STUDENT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIm+EDTytsSnukbONoiJJqWz8VX6Cqo4UGPzWZgFTOtxMBXrCzaGETG0XY0BdBf+wQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJLg0LQqHzaVsBC/A9zVi3LAH0ChzrpLSxZgWhZCrj3pHl/cAA+GzoxRPzHLk5e2CA==",
                             PhoneNumberConfirmed = false,
                             SName = "Student",
-                            SecurityStamp = "ea919dcd-57e4-400c-a08f-db4e1f620e34",
+                            SecurityStamp = "7f1be905-2f19-435e-9653-37d008f89ecf",
                             TwoFactorEnabled = false,
                             UserName = "student@student.com",
-                            teacherCode = "82d1b64d-1909-43ce-a7cd-520e326212e8"
+                            teacherCode = "7fbff3d2-b5eb-4a81-867d-56ac3adfa5f6"
                         },
                         new
                         {
@@ -351,10 +353,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TUTOR@TUTOR.COM",
                             NormalizedUserName = "TUTOR@TUTOR.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKb/qSh+8/Rcj9DXjCUnpWEKTcW/MHNK14p1GG4RsMqXYnvl1SLI00LO/4qpXBMB1g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH70hNyoaJMHLajy57CvxN7UuT2vmdbDJIWiCflQt2aKDhfTW9Nz812b2/80gY447w==",
                             PhoneNumberConfirmed = false,
                             SName = "Tutor",
-                            SecurityStamp = "3c48048c-229e-4974-bdc7-2aaab6fbb102",
+                            SecurityStamp = "5e927c83-8048-48f0-9084-b005dea22792",
                             TwoFactorEnabled = false,
                             UserName = "tutor@tutor.com",
                             teacherCode = "1234567890"
@@ -389,10 +391,6 @@ namespace SAD.Migrations
                     b.Property<int>("SlotId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("CardColour")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("INTEGER");

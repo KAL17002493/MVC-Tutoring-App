@@ -8,13 +8,12 @@ namespace SAD.Models
         public int Id { get; set; }
 
         [Required]
-        public string FollowerId { get; set; }  // the user ID of the followER
+        public string FollowerId { get; set; }
 
         [Required]
-        public string FollowingId { get; set; } //Uuser ID of the followING
+        public string FollowingId { get; set; }
 
-        public CustomUserModel Follower { get; set; }  //Navigation property to the follower user
-
-        public CustomUserModel Following { get; set; } //Navigation property to the following user
+        public CustomUserModel Follower { get; set; }
+        public CustomUserModel Following { get; set; }
     }
 }

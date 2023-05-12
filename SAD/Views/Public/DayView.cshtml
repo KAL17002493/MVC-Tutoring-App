@@ -1,44 +1,31 @@
-﻿@model List<DateTime>
+﻿@model List<SlotModel>
 
 <h1>@ViewBag.SelectedDate.ToString("MMMM yyyy")</h1>
 <h3 class="mb-5">@ViewBag.SelectedDate.ToString("D")</h3>
-
 <div class="row">
-    @foreach (var timeIntervals in Model)
+    @foreach (var slot in Model)
     {
-        <!--Check if time is now and changes colour to green-->
-        if (timeIntervals.Hour == DateTime.Now.Hour)
-        {
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-            <div class="card cardToday">
-                <div class="card-body">
-                    <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                </div>
-            </div>
-        </div>
-        }
-        //Times that are gone and changes colour to grey
-        else if(timeIntervals < DateTime.Now)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                <div class="card cardOld">
-                    <div class="card-body">
-                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                    </div>
-                </div>
-            </div>
-        }
-        //Times to come and keep colour white
-        else
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@timeIntervals.ToString("HH:mm")</h5>
-                    </div>
-                </div>
-            </div>
-        }
+        string time = slot.SlotTime.ToString("HH:mm");
+        bool isAvailable = slot.IsAvailable;
+        bool isOld = slot.SlotTime < DateTime.Now;
 
-    }
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
+            <div class="@slot.CardColour">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <!--If Booken outputs text-->
+                        @time @if (!isAvailable)
+                        {
+                            <text>(Booked)</text>
+                        }
+                    </h5>
+                    <!--If available and not is not old date creates clickable link-->
+                    @if (isAvailable && !isOld)
+                    {
+                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                    }
+                </div>
+            </div>
         </div>
+    }
+</div>

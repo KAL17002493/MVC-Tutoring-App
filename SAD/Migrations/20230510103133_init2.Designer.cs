@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SAD.Data;
 
@@ -10,9 +11,10 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510103133_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
@@ -193,22 +195,20 @@ namespace SAD.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("StudentId")
-                        .IsRequired()
+                    b.Property<string>("StudentIdId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("TimeSlot")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TutorId")
-                        .IsRequired()
+                    b.Property<string>("TutorIdId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentIdId");
 
-                    b.HasIndex("TutorId");
+                    b.HasIndex("TutorIdId");
 
                     b.ToTable("Booking");
                 });
@@ -309,13 +309,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDvBfXq2MyAapz2dNDYCPzciawasIa/kCGkg/xV+aX33aJB4fc0JEyEybwrGaYKu3Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF/AHaZC4sw1w7hCNHvoAaxpCNGXRWe2fzMezCK9fn0lKWIE70x4XcCfp1lI3gzzMA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "3de8ff7f-79ca-4ccf-9fa4-fe252ef589d3",
+                            SecurityStamp = "4a88c09b-acda-492b-bb3b-d60a90bbe2c3",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
-                            teacherCode = "4836b4eb-5d3f-4286-ad47-cf9f26433370"
+                            teacherCode = "60545cf6-826b-43a0-b3ee-b37a1c950b50"
                         },
                         new
                         {
@@ -330,13 +330,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT@STUDENT.COM",
                             NormalizedUserName = "STUDENT@STUDENT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIm+EDTytsSnukbONoiJJqWz8VX6Cqo4UGPzWZgFTOtxMBXrCzaGETG0XY0BdBf+wQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB7uQKpgbjGgoozihy/eKdJb5tZFHZH2IuA8qhturwltnwEmTLHiUP7J6+7FtgVO6Q==",
                             PhoneNumberConfirmed = false,
                             SName = "Student",
-                            SecurityStamp = "ea919dcd-57e4-400c-a08f-db4e1f620e34",
+                            SecurityStamp = "873cec68-af88-4645-85bf-32274bc4a688",
                             TwoFactorEnabled = false,
                             UserName = "student@student.com",
-                            teacherCode = "82d1b64d-1909-43ce-a7cd-520e326212e8"
+                            teacherCode = "04defc0b-29b5-4b6a-a294-1bc5523568bc"
                         },
                         new
                         {
@@ -351,10 +351,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TUTOR@TUTOR.COM",
                             NormalizedUserName = "TUTOR@TUTOR.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKb/qSh+8/Rcj9DXjCUnpWEKTcW/MHNK14p1GG4RsMqXYnvl1SLI00LO/4qpXBMB1g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL9gqjT6tqz9R9kPz1iAzo+R0ucU5VDONG+ZNr176v0XZGJ2NgL552JeUBp2HMfh3Q==",
                             PhoneNumberConfirmed = false,
                             SName = "Tutor",
-                            SecurityStamp = "3c48048c-229e-4974-bdc7-2aaab6fbb102",
+                            SecurityStamp = "367e1618-f6c4-4b76-92fc-f0f4aef64fff",
                             TwoFactorEnabled = false,
                             UserName = "tutor@tutor.com",
                             teacherCode = "1234567890"
@@ -382,27 +382,6 @@ namespace SAD.Migrations
                     b.HasIndex("FollowingId");
 
                     b.ToTable("Follow");
-                });
-
-            modelBuilder.Entity("SAD.Models.SlotModel", b =>
-                {
-                    b.Property<int>("SlotId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CardColour")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("SlotTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("SlotId");
-
-                    b.ToTable("Slot");
                 });
 
             modelBuilder.Entity("SAD.Models.TutorAvailability", b =>
@@ -482,21 +461,17 @@ namespace SAD.Migrations
 
             modelBuilder.Entity("SAD.Models.BookingModel", b =>
                 {
-                    b.HasOne("SAD.Models.CustomUserModel", "Student")
+                    b.HasOne("SAD.Models.CustomUserModel", "StudentId")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentIdId");
 
-                    b.HasOne("SAD.Models.CustomUserModel", "Tutor")
+                    b.HasOne("SAD.Models.CustomUserModel", "TutorId")
                         .WithMany()
-                        .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TutorIdId");
 
-                    b.Navigation("Student");
+                    b.Navigation("StudentId");
 
-                    b.Navigation("Tutor");
+                    b.Navigation("TutorId");
                 });
 
             modelBuilder.Entity("SAD.Models.FollowModel", b =>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SAD.Data;
 using SAD.Migrations;
 using SAD.Models;
+using static SAD.Models.Enums;
 
 namespace SAD.Controllers
 {
@@ -29,18 +30,17 @@ namespace SAD.Controllers
             return View();
         }
 
-        public async Task<IActionResult> TeacherScreenAsync()
+        public async Task<IActionResult> TeacherScreenAsync(int page = 1)
         {
-            // Find the role
+            //Number of tutors per page
+            int pageSize = 8; 
+
+            //Find all tutors by role
             var role = await _roleManager.FindByNameAsync("Tutor");
             if (role == null)
             {
                 return NotFound();
             }
-
-            // Get all users in the role
-            var usersInRole = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
-
 
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
@@ -57,17 +57,31 @@ namespace SAD.Controllers
                 }
             }
 
-            // Create the view model
+            //Get all users in the role
+            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
+
+            //Exclude teacher whom the user is already following and teachers who are not available
+            var publicTeachers = allTutors.Where(t => t.Available && !followedTeachers.Any(ft => ft.Id == t.Id)).ToList();
+
+            //Get the total count of public teachers
+            var totalPublicTeachers = publicTeachers.Count;
+
+            //Get the current page of public teachers
+            publicTeachers = publicTeachers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            //Create the view model instance
             var viewModel = new TeacherScreenViewModel
             {
-                PublicTeachers = usersInRole,
-                FollowedTeachers = followedTeachers
+                PublicTeachers = publicTeachers,
+                FollowedTeachers = followedTeachers,
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(totalPublicTeachers / (double)pageSize)
             };
 
-            // Return the view with the view model
+            //Return data to the view
             return View(viewModel);
-        }
 
+        }
 
         public async Task<IActionResult> TeacherProfileScreen(string id)
         {
@@ -80,9 +94,23 @@ namespace SAD.Controllers
                 return NotFound();
             }
 
-            //Pass the teacher model to view
-            return View(teacherProfile);
+            //Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            //Check if the user is already following the teacher
+            var isFollowing = await _context.Follow.AnyAsync(f => f.FollowerId == currentUser.Id && f.FollowingId == teacherProfile.Id);
+
+            //Pass the teacher model and the following status to the view
+            var viewModel = new TeacherProfileViewModel
+            {
+                Teacher = teacherProfile,
+                IsFollowing = isFollowing
+            };
+
+            // Pass the teacher model to the view
+            return View(viewModel);
         }
+
 
         //Follow new teacher
         public async Task<IActionResult> FollowTeacher(string teacherId)
@@ -154,6 +182,49 @@ namespace SAD.Controllers
             //Redirect to the following TeacherScreen
             return RedirectToAction("TeacherScreen");
         }
+
+        public async Task<IActionResult> BookedLessons()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Get the list of lessons where the current user is the student and include the Tutor information
+            var lessons = await _context.Booking
+                .Include(b => b.Tutor)
+                .Where(b => b.StudentId == currentUser.Id)
+                .ToListAsync();
+
+            // Return the list of lessons to the view
+            return View(lessons);
+        }
+
+        public async Task<IActionResult> CancelLesson(string lessonId)
+        {
+            //Retrieve the lesson from the database based on the provided lessonId
+            var lesson = await _context.Booking.FindAsync(lessonId);
+
+            //Check if the lesson exists
+            if (lesson == null)
+            {
+                return NotFound();
+            }
+
+            //Update the status of the lesson to "Cancelled"
+            //lesson.Status = BookingStatus.Cancelled;
+
+            // Remove the lesson from the context
+            _context.Booking.Remove(lesson);
+
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+            //Redirect to the BookedLessons view
+            return RedirectToAction("BookedLessons");
+        }
+
+
+
+
 
 
 

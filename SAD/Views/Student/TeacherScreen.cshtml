@@ -15,20 +15,22 @@
                 </div>
             </div>
         </div>
+        <!-- If no teachers are found, display message -->
         @if (Model.FollowedTeachers.Count == 0)
         {
-            <p class="mt-5 fw-bold fs-5">You are not following any teachers or there is a problem with the web application but it is probably the former</p>
+            <p class="mt-5 fw-bold fs-5">You are not following any teachers or there is a problem with the web application, but it is probably the former.</p>
         }
         else
         {
             <div class="row">
+                <!--Display all FollowedTeachers in a card style-->
                 @foreach (var teacher in Model.FollowedTeachers)
                 {
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
                         <div class="card myTeacher-card">
                             <div class="card-body">
                                 <h5>@teacher.FName @teacher.SName</h5>
-                                <p>@teacher.Email</p>
+                                <p class="card-text">@teacher.Email</p>
                                 <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = teacher.Id })" class="stretched-link"></a>
                             </div>
                         </div>
@@ -39,39 +41,67 @@
     </div>
 </div>
 
-
-
-<!--Public Teachers-->
+<!-- Public Teachers -->
 <div class="Orange">
     <h2 class="mb-4 mx-2">Public Tutors</h2>
-    <!--If no teachers are found, display message-->
+    <!-- If no teachers are found, display message -->
     @if (Model.PublicTeachers.Count == 0)
     {
         <p>No users of Role Teacher found.</p>
     }
-    //Display all availible teachers
     else
     {
-    <div class="container">
-        <div class="row">
+        <div class="container">
+            <div class="row">
+                <!--Displays all publc teacher in a card-->
                 @foreach (var tutor in Model.PublicTeachers)
                 {
-                    //Only display teachers that are availible
-                    @if (tutor.Available == true && !Model.FollowedTeachers.Any(ft => ft.Id == tutor.Id))
-                    {
-                    //Direct user to teacher profile screen by clicking on card
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
-                        <div class="card myTeacher-card">
+                        <div class="card publicTeacher-card">
                             <div class="card-body">
                                 <h5>@tutor.FName @tutor.SName</h5>
-                                <p>@tutor.Email</p>
+                                <p class="card-text">@tutor.Email</p>
                                 <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>
+                }
+            </div>
+           <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-end">
+        <!-- Pagination (Creates page links at the bottom of the section) -->
+        <div class="d-flex align-items-end">
+
+            <!--Previous button-->
+            <div class="mx-1">
+                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })"
+                   class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
+            </div>
+
+            <!-- Outputs limited number of page numbers, limited to 3 -->
+            <div class="mx-1">
+                @{
+                    int startPage = Math.Max(Model.CurrentPage - 1, 1);
+                    int endPage = Math.Min(Model.CurrentPage + 1, Model.TotalPages);
+
+                    for (int i = startPage; i <= endPage; i++)
+                    {
+                        <a href="@Url.Action("TeacherScreen", "Student", new { page = i })" class="pagination-number">@i</a>
                     }
                 }
+            </div>
+
+            <!--Next button-->
+            <div class="mx-1">
+                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })"
+                   class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
+            </div>
         </div>
     </div>
+</div>
+
+        </div>
     }
 </div>
+
+

@@ -8,6 +8,9 @@ namespace SAD.Data
     public class ApplicationDbContext : IdentityDbContext<CustomUserModel>
     {
         public DbSet<FollowModel> Follow { get; set; }
+        public DbSet<TutorAvailability> TutorAvailabilities { get; set; }
+        public DbSet<BookingModel> Booking { get; set; }
+        public DbSet<SlotModel> Slot { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -120,7 +123,7 @@ namespace SAD.Data
             builder.Entity<CustomUserModel>().HasData(user);
         }
 
-        //Give admin user it's admin role
+        //Give users their roles
         private void SeedUserRoles(ModelBuilder builder)
         {
             builder.Entity<IdentityUserRole<string>>().HasData(

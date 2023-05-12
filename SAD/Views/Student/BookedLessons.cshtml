@@ -1,0 +1,49 @@
+﻿@model List<BookingModel>
+
+<div class="container">
+    <h1>Booked Lessons</h1>
+
+    @if (Model.Count > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered booking-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tutor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td class="align-middle">@booking.Tutor.FName @booking.Tutor.SName</td>
+                            <td class="align-middle">@booking.TimeSlot.ToShortDateString()</td>
+                            <td class="align-middle">@booking.TimeSlot.ToShortTimeString()</td>
+                            <td class="align-middle">@booking.Status</td>
+                            <td class="actions align-middle">
+                                <div class="d-flex">
+                                    @if (booking.Status == Enums.BookingStatus.Booked)
+                                    {
+                                        <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
+                                            <input type="hidden" name="lessonId" value="@booking.Id" />
+                                            <button type="submit" class="btn btn-danger">Cancel Lesson</button>
+                                        </form>
+                                    }
+                                    <!-- Add more buttons here if needed -->
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="mt-5 fw-bold fs-5">You do not have any bookings.</p>
+    }
+</div>

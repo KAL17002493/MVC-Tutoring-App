@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SAD.Data;
 
@@ -10,9 +11,10 @@ using SAD.Data;
 namespace SAD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230511123943_slotServiceColour")]
+    partial class slotServiceColour
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
@@ -309,13 +311,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDvBfXq2MyAapz2dNDYCPzciawasIa/kCGkg/xV+aX33aJB4fc0JEyEybwrGaYKu3Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOj5uLiSxrMxS/49sI9abO8bahbWVnH133VKKxlJoO49FQd95U0K0Ruw8k/qdNfaqA==",
                             PhoneNumberConfirmed = false,
                             SName = "Admin",
-                            SecurityStamp = "3de8ff7f-79ca-4ccf-9fa4-fe252ef589d3",
+                            SecurityStamp = "b224a03e-581e-4c86-8e2a-41c0709dd505",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
-                            teacherCode = "4836b4eb-5d3f-4286-ad47-cf9f26433370"
+                            teacherCode = "589bcecf-77d1-4e3c-934c-d48622840666"
                         },
                         new
                         {
@@ -330,13 +332,13 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "STUDENT@STUDENT.COM",
                             NormalizedUserName = "STUDENT@STUDENT.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIm+EDTytsSnukbONoiJJqWz8VX6Cqo4UGPzWZgFTOtxMBXrCzaGETG0XY0BdBf+wQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM/Oc6xZuXK/j6dN3op781hN5qy2h5elSwmH+/ZFd/8buGq5lZ/mVheLT2GlYeMIkQ==",
                             PhoneNumberConfirmed = false,
                             SName = "Student",
-                            SecurityStamp = "ea919dcd-57e4-400c-a08f-db4e1f620e34",
+                            SecurityStamp = "345f8f62-ea10-496f-b341-657bb5315742",
                             TwoFactorEnabled = false,
                             UserName = "student@student.com",
-                            teacherCode = "82d1b64d-1909-43ce-a7cd-520e326212e8"
+                            teacherCode = "ea59ff2a-1f1d-4e84-bd0d-f0646123f3db"
                         },
                         new
                         {
@@ -351,10 +353,10 @@ namespace SAD.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TUTOR@TUTOR.COM",
                             NormalizedUserName = "TUTOR@TUTOR.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKb/qSh+8/Rcj9DXjCUnpWEKTcW/MHNK14p1GG4RsMqXYnvl1SLI00LO/4qpXBMB1g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKpzr32UUX9TUjx1C8LgeAaikmsihR4OBwaB/zv6JsbmVwCweOu3f4b9/Qy2acE19Q==",
                             PhoneNumberConfirmed = false,
                             SName = "Tutor",
-                            SecurityStamp = "3c48048c-229e-4974-bdc7-2aaab6fbb102",
+                            SecurityStamp = "b2d4fc3d-c95d-49bc-a0b6-be8b681f59fc",
                             TwoFactorEnabled = false,
                             UserName = "tutor@tutor.com",
                             teacherCode = "1234567890"
