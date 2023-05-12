@@ -67,35 +67,38 @@
                     </div>
                 }
             </div>
-            <div class="row">
-                <div class="col-md-12 d-flex justify-content-center align-items-end">
-                    <!-- Pagination (Creates page links at the bottom of the section) -->
-                    <div class="d-flex align-items-end">
+           <div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-end">
+        <!-- Pagination (Creates page links at the bottom of the section) -->
+        <div class="d-flex align-items-end">
 
-                        <!--Previous button-->
-                        <div class="mx-1">
-                            <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })"
-                               class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
-                        </div>
-
-                        <!--PGenerates numbers for however many Publuc tutor pages there are-->
-                        <div class="mx-1">
-                            @for (int i = 1; i <= Model.TotalPages; i++)
-                            {
-                                <a href="@Url.Action("TeacherScreen", "Student", new { page = i })" class="pagination-number">@i</a>
-                            }
-                        </div>
-
-                        <!--Next button-->
-                        <div class="mx-1">
-                            <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })"
-                               class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
-                        </div>
-                    </div>
-
-                </div>
-
+            <!--Previous button-->
+            <div class="mx-1">
+                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })"
+                   class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
             </div>
+
+            <!-- Outputs limited number of page numbers, limited to 3 -->
+            <div class="mx-1">
+                @{
+                    int startPage = Math.Max(Model.CurrentPage - 1, 1);
+                    int endPage = Math.Min(Model.CurrentPage + 1, Model.TotalPages);
+
+                    for (int i = startPage; i <= endPage; i++)
+                    {
+                        <a href="@Url.Action("TeacherScreen", "Student", new { page = i })" class="pagination-number">@i</a>
+                    }
+                }
+            </div>
+
+            <!--Next button-->
+            <div class="mx-1">
+                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })"
+                   class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
+            </div>
+        </div>
+    </div>
+</div>
 
         </div>
     }

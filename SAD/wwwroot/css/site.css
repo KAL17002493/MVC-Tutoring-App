@@ -1,21 +1,23 @@
-/*Web app font size*/
 html {
-  font-size: 14px;
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-    /*Remove padding added by body for respomsiveness*/
-  body {
-    padding-top: 0px;
-  }
+    html {
+        font-size: 16px;
+    }
+
+    /* Remove padding added by body for responsiveness */
+    body {
+        padding-top: 0;
+    }
 }
 
-
-
-/*Changes the size of calendar cards*/
+/* Changes the size of calendar cards */
 @media (min-width: 992px) {
     .calCard {
         height: 200px;
@@ -38,7 +40,7 @@ html {
     min-width: 100px !important;
 }
 
-/*TeacherScreen View cards*/
+/* TeacherScreen View cards */
 .myTeacher-card {
     padding: 0;
     margin: 0;
@@ -52,51 +54,48 @@ html {
     background-color: #adadad;
 }
 
-
-html {
-    position: relative;
-    min-height: 100%;
-    height: 100%;
-    width: 100%;
-}
-
 body {
     margin-bottom: 60px;
-    /*Body background colour*/
+    /* Body background color */
     background-color: #FFE6FF;
-    /*Add padding to not cover content by navBar*/
+    /* Add padding to not cover content by navBar */
     padding-top: 100px;
 }
 
-/*Gradient navbar colour*/
+/* Gradient navbar color */
 .navbarGradient {
     background-image: linear-gradient(90deg, #C287BD, #F18DB2, #FF9A9C, #FFB381, #FFD46E, #F9F871);
 }
 
-/*Clock size on teacher index view*/
+/* Clock size on teacher index view */
 .clockSize {
     font-size: 80px;
 }
 
-.noPadding{
-    padding: 0px;
+.noPadding {
+    padding: 0;
 }
 
 .Orange {
-    background-color: rgb(255,179,129, .5);
+    background-color: rgba(255, 179, 129, 0.5);
     padding: 20px;
 }
 
 .Blue {
-    background-color: rgb(0,130,189, .5);
+    background-color: rgba(0, 130, 189, 0.5);
     padding: 20px;
 }
 
-/***********TEACHERSCREEN VIEW***********/
-.card {
-    height: 100%;
+.footer {
+
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f2c2f2;
 }
 
+/***********TEACHERSCREEN VIEW***********/
 .myTeacher-card,
 .publicTeacher-card {
     height: 100%;
@@ -110,12 +109,7 @@ body {
     }
 
     .myTeacher-card h5,
-    .publicTeacher-card h5 {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
+    .publicTeacher-card h5,
     .myTeacher-card p,
     .publicTeacher-card p {
         white-space: nowrap;
@@ -124,73 +118,29 @@ body {
     }
 
 .pagination-number {
-    font-size: 20px; /* Adjust the font size as needed */
+    font-size: 20px;
 }
 
-/*Disabled Previous and Back buttons*/
+/* Disabled Previous and Back buttons */
 a.disabled {
     pointer-events: none;
     color: grey;
 }
 
-
 /***********BOOKEDLESSONS VIEW***********/
-/*Makes the row height all the same*/
+/* Makes the row height all the same */
 .booking-table td {
-    height: 50px; /* Adjust the height value as needed */
+    height: 50px;
     vertical-align: middle;
 }
 
-    /*Reduces white space in action column*/
+    /* Reduces white space in action column */
     .booking-table td.actions {
         width: 1%;
         white-space: nowrap;
     }
 
-/*Make the bottom line of each row bolder*/
+/* Make the bottom line of each row bolder */
 .booking-table tbody tr {
     border-bottom: 1px solid #000;
-}
-
-/*TESTING GROUNDS*/
-/*Animation test*/
-@keyframes fadeIn {
-    from {
-        width: 350px;
-        height: 350px;
-    }
-
-    to {
-        width: 650px;
-        height: 650px;
-    }
-}
-
-.fade-in:hover {
-    animation: fadeIn 1s linear;
-}
-
-.imgStudent {
-    width: 100%;
-    height: 100%;
-}
-
-.studentimage {
-    background-image: url("../images/WhiteBear.jpg");
-    border: none;
-    width: 60%;
-    height: 60%;
-}
-
-    .studentimage:hover {
-        transition: 0.5s;
-        width: 75%;
-        height: 75%;
-        margin-top: 25%;
-        margin-left: 25%;
-    }
-
-.roleForm {
-    width: 100%;
-    height: 100%;
 }
