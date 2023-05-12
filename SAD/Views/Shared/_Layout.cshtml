@@ -28,8 +28,8 @@
                         <!--Tutors Nav bar options-->
                         @if(User.IsInRole("Tutor") || User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Public" asp-action="Index">Calendar</a>
+                            <li class="nav-item text-dark">
+                                <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="RedirectToPublicController">Calendar</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Teacher" asp-action="TeacherProfile">My Profile</a>

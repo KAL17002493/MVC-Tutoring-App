@@ -17,12 +17,23 @@
                         @time @if (!isAvailable)
                         {
                             <text>(Booked)</text>
+                            @if (User.IsInRole("Tutor")) 
+                            {
+                                <a href="@Url.Action("ViewSlot", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
+                            }
                         }
                     </h5>
                     <!--If available and not is not old date creates clickable link-->
                     @if (isAvailable && !isOld)
                     {
-                        <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                        @if (User.IsInRole("Tutor")) 
+                        {
+                            <a href="@Url.Action("ViewSlot", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("BookSlot", "Public", new { timeIntervals = slot.SlotTime, tutorId = ViewBag.tutorId})" class="stretched-link"></a>
+                        }
                     }
                 </div>
             </div>

@@ -76,5 +76,18 @@ namespace SAD.Controllers
             return RedirectToAction(nameof(TeacherProfile));
         }
 
+        public async Task<IActionResult> RedirectToPublicController()
+        {
+            // Get the currently logged-in user
+            var user = await _userManager.GetUserAsync(User);
+            // Redirect to the public profile view with this user's ID
+            return RedirectToAction("Index", "Public", new { id = user.Id });
+        }
+
+        public IActionResult ViewSlot()
+        {
+            return View();
+        }
+
     }
 }

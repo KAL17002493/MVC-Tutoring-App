@@ -67,6 +67,7 @@ namespace SAD.Controllers
                 DateTime start = date.Date.AddHours(i);
                 string id = start.Ticks.ToString() + tutorId;
                 bool isAvailable = !_context.Booking.Any(x => x.TimeSlot.Date == start.Date && x.TimeSlot.Hour == start.Hour && x.TutorId == tutorId);
+
                 bool isToday = start.Date == DateTime.Now.Date && start.Hour == DateTime.Now.Hour;
                 bool isOld = start < DateTime.Now;
 
@@ -88,9 +89,6 @@ namespace SAD.Controllers
             ViewBag.SelectedDate = date;
             return View(timeIntervals);
         }
-
-
-
 
 
         //BOOKING SECTION
@@ -115,6 +113,15 @@ namespace SAD.Controllers
                 TimeSlot = timeIntervals,
                 Status = Enums.BookingStatus.Pending
             };
+
+            //Check if the user has the "Tutor" role
+            /*var isTutor = await _userManager.IsInRoleAsync(user, "Tutor");
+
+            if (isTutor)
+            {
+                //Redirect the Tutor to a different page
+                return RedirectToAction("RedirectToPublicController", "Teacher");
+            }*/
 
             return View(bookingModel);
         }

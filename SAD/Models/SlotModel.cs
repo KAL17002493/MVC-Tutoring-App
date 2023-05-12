@@ -9,5 +9,6 @@ namespace SAD.Models
         public bool IsAvailable { get; set; }
         public DateTime SlotTime { get; set; }
         public string CardColour { get; set; }
+        public string BookingId { get; set; }
     }
 }
