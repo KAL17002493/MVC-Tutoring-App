@@ -1,5 +1,10 @@
 ﻿@model List<BookingModel>
 
+@{
+    //Sorts the bookings by date
+    var sortBookingss = Model.OrderByDescending(booking => booking.TimeSlot).ToList();
+}
+
 <div class="container">
     <h1>Booked Lessons</h1>
 
@@ -17,10 +22,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var booking in Model)
+                    @foreach (var booking in sortBookingss)
                     {
-                        @if(@booking.TimeSlot < DateTime.Now)
+                        @if (booking.TimeSlot < DateTime.Now)
                         {
+                            //If the booking is in the past, display it in a different colour and makes booking uncancellable
                             <tr class="cardOld">
                                 <td class="align-middle">@booking.Tutor.FName @booking.Tutor.SName</td>
                                 <td class="align-middle">@booking.TimeSlot.ToShortDateString()</td>
@@ -30,18 +36,19 @@
                                     <div class="d-flex">
                                         @if (booking.Status == Enums.BookingStatus.Booked)
                                         {
+                                            //Cancel Lesson button
                                             <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
                                                 <input type="hidden" name="lessonId" value="@booking.Id" />
                                                 <button type="submit" class="btn btn-secondary disabled">Cancel Lesson</button>
                                             </form>
                                         }
-                                        <!-- Add more buttons here if needed -->
                                     </div>
                                 </td>
                             </tr>
                         }
                         else
                         {
+                            //If the booking is in the future, display it in a different colour and makes booking cancellable
                             <tr>
                                 <td class="align-middle">@booking.Tutor.FName @booking.Tutor.SName</td>
                                 <td class="align-middle">@booking.TimeSlot.ToShortDateString()</td>
@@ -51,12 +58,12 @@
                                     <div class="d-flex">
                                         @if (booking.Status == Enums.BookingStatus.Booked)
                                         {
+                                            //Cancel Lesson button
                                             <form method="post" action="@Url.Action("CancelLesson", "Student")" class="me-2">
                                                 <input type="hidden" name="lessonId" value="@booking.Id" />
                                                 <button type="submit" class="btn btn-danger">Cancel Lesson</button>
                                             </form>
                                         }
-                                        <!-- Add more buttons here if needed -->
                                     </div>
                                 </td>
                             </tr>
@@ -68,6 +75,7 @@
     }
     else
     {
-        <p class="mt-5 fw-bold fs-5">You do not have any bookings.</p>
+        //If the student has no bookings, display this message
+        <p class="mt-5 fw-bold fs-5">You do not have any bookings</p>
     }
 </div>
