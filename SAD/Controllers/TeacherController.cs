@@ -85,8 +85,42 @@ namespace SAD.Controllers
             return RedirectToAction("Index", "Public", new { id = user.Id });
         }
 
-        //Get booken lessons from database for logged in teacher
+        //Get booken lessons from database for logged in teacher for current week
         public async Task<IActionResult> BookedLessons()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Get the start and end of the week
+            DateTime startOfWeek;
+
+            //Determins start of current week (Monday) based on todays date
+            if (DateTime.Today.DayOfWeek == DayOfWeek.Sunday)
+            {
+                //It today is sunday figures out last weeks monday because C# considers Sunday starts of week not monday
+                startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - 6);
+            }
+            else
+            {
+                //If today is not sunday calculates current weeks monday
+                startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+            }
+
+            //Calcuates the end of the week date
+            var endOfWeek = startOfWeek.AddDays(7);
+
+            // Get the list of lessons where the current user is the tutor and include the Student information
+            var lessons = await _dbContext.Booking
+                .Include(b => b.Student)
+                .Where(b => b.TutorId == currentUser.Id && b.TimeSlot >= startOfWeek && b.TimeSlot < endOfWeek)
+                .ToListAsync();
+
+            // Return the list of lessons to the view
+            return View(lessons);
+        }
+
+        //Get all booked lesson time slots from database
+        public async Task<IActionResult> AllBookedLessons()
         {
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
@@ -100,6 +134,8 @@ namespace SAD.Controllers
             // Return the list of lessons to the view
             return View(lessons);
         }
+
+
 
         public async Task<IActionResult> CancelLesson(string lessonId)
         {

@@ -1,13 +1,7 @@
 ﻿@model List<BookingModel>
 
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="col-6">This Weeks Booked Lessons</h1>
-        <div class="col-6 text-end">
-            <a href="@Url.Action("AllBookedLessons", "Teacher")" class="btn btn-primary">All Lessons</a>
-
-        </div>
-    </div>
+    <h1>Booked Lessons</h1>
 
     @if (Model.Count > 0)
     {
@@ -84,4 +78,3 @@
         <p class="mt-5 fw-bold fs-5">You do not have any bookings.</p>
     }
 </div>
-
