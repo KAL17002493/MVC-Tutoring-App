@@ -183,20 +183,41 @@ namespace SAD.Controllers
             return RedirectToAction("TeacherScreen");
         }
 
+        //Get booken lessons from database for logged in student for current week
         public async Task<IActionResult> BookedLessons()
         {
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Get the list of lessons where the current user is the student and include the Tutor information
+            // Get the start and end of the week
+            DateTime startOfWeek;
+
+            //Determins start of current week (Monday) based on todays date
+            if (DateTime.Today.DayOfWeek == DayOfWeek.Sunday)
+            {
+                //It today is sunday figures out last weeks monday because C# considers Sunday starts of week not monday
+                startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek - 6);
+            }
+            else
+            {
+                //If today is not sunday calculates current weeks monday
+                startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+            }
+
+            //Calcuates the end of the week date
+            var endOfWeek = startOfWeek.AddDays(7);
+
+            // Get the list of lessons where the current user is the tutor and include the Student information
             var lessons = await _context.Booking
                 .Include(b => b.Tutor)
-                .Where(b => b.StudentId == currentUser.Id)
+                .Where(b => b.StudentId == currentUser.Id && b.TimeSlot >= startOfWeek && b.TimeSlot < endOfWeek)
                 .ToListAsync();
 
             // Return the list of lessons to the view
             return View(lessons);
         }
+
+
 
         public async Task<IActionResult> CancelLesson(string lessonId)
         {
