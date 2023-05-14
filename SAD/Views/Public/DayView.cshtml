@@ -1,7 +1,6 @@
 ﻿@model List<SlotModel>
 
-<h1>@ViewBag.SelectedDate.ToString("MMMM yyyy")</h1>
-<h3 class="mb-5">@ViewBag.SelectedDate.ToString("D")</h3>
+<h1 class="mb-3 mt-5">@ViewBag.SelectedDate.ToString("D")</h1>
 <div class="row">
     @foreach (var slot in Model)
     {
