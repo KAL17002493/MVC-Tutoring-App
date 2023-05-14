@@ -82,15 +82,16 @@ body {
 /* Changes the size of calendar cards */
 @media (min-width: 992px) {
     .calCard {
-        height: 200px;
+        height: 180px;
         text-decoration: none;
         color: inherit;
     }
 
     .col-lg-1 {
-        flex-basis: 8.333333%;
+        flex-basis: 14.2857143%; /* Updated to fit 7 cards */
     }
 }
+
 
 /***********PUBLIC INDEX VIEW CARD STYLING***********/
 .number {

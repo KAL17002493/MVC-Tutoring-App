@@ -10,9 +10,9 @@
             <!--Check if data is today's date-->
             @if (date == DateTime.Today)
             {
-                <div class="col-sm-4 col-md-3 col-lg-2">
+                <div class="col-sm-4 col-md-3 col-lg-1">
                     <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id })" class="text-decoration-none text-reset">
-                        <div class="card mb-3 calCard cardToday">
+                        <div class="card mb-3 calCard cardToday custom-card">
                             <div class="card-body textColour">
                                 <h5 class="card-title number">@date.Day</h5>
                                 <p class="card-text day">@date.DayOfWeek.ToString().Substring(0, 3)</p>
@@ -20,14 +20,13 @@
                         </div>
                     </a>
                 </div>
-
             }
             //Dates that have gone
             else if (date < DateTime.Today)
             {
-                <div class="col-sm-4 col-md-3 col-lg-2">
+                <div class="col-sm-4 col-md-3 col-lg-1">
                     <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id  })" class="text-decoration-none text-reset">
-                        <div class="card mb-3 calCard cardOld">
+                        <div class="card mb-3 calCard cardOld custom-card">
                             <div class="card-body textColour">
                                 <h5 class="card-title number">@date.Day</h5>
                                 <p class="card-text day">@date.DayOfWeek.ToString().Substring(0, 3)</p>
@@ -39,9 +38,9 @@
             //Dates to come
             else
             {
-                <div class="col-sm-4 col-md-3 col-lg-2">
+                <div class="col-sm-4 col-md-3 col-lg-1">
                     <a href="@Url.Action("DayView", "Public", new { date = date.ToString("yyyy-MM-dd"), tutorId = ViewBag.teacherProfile.Id  })" class="text-decoration-none text-reset">
-                        <div class="card mb-3 calCard">
+                        <div class="card mb-3 calCard custom-card">
                             <div class="card-body textColour">
                                 <h5 class="card-title number">@date.Day</h5>
                                 <p class="card-text day">@date.DayOfWeek.ToString().Substring(0, 3)</p>
@@ -49,7 +48,6 @@
                         </div>
                     </a>
                 </div>
-
             }
         }
     </div>
