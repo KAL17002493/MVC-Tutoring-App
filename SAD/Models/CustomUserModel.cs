@@ -16,5 +16,8 @@ namespace SAD.Models
         public string About { get; set; } = String.Empty;
 
         public string teacherCode { get; set; } = Guid.NewGuid().ToString();
+
+
+        public ICollection<UserSubject> UserSubjects { get; set; }
     }
 }

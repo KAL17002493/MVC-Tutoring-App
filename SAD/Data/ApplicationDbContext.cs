@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SAD.Models;
+using System.Reflection.Emit;
 
 namespace SAD.Data
 {
@@ -12,6 +13,9 @@ namespace SAD.Data
         public DbSet<BookingModel> Booking { get; set; }
         public DbSet<SlotModel> Slot { get; set; }
 
+        public DbSet<Subject> Subject { get; set; }
+        public DbSet<UserSubject> UserSubject { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
@@ -20,11 +24,65 @@ namespace SAD.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            base.OnModelCreating(builder);
             SeedAdmin(builder);
             SeedStudent(builder);
             SeedTutor(builder);
             SeedRoles(builder);
             SeedUserRoles(builder);
+
+            builder.Entity<Subject>().HasData(
+                new Subject { Id = 1, Name = "Mathematics" },
+                new Subject { Id = 2, Name = "Physics" },
+                new Subject { Id = 3, Name = "Chemistry" },
+                new Subject { Id = 4, Name = "Biology" },
+                new Subject { Id = 5, Name = "English Literature" },
+                new Subject { Id = 6, Name = "History" },
+                new Subject { Id = 7, Name = "Geography" },
+                new Subject { Id = 8, Name = "Computer Science" },
+                new Subject { Id = 9, Name = "Spanish" },
+                new Subject { Id = 10, Name = "French" },
+                new Subject { Id = 11, Name = "German" },
+                new Subject { Id = 12, Name = "Art" },
+                new Subject { Id = 13, Name = "Music" },
+                new Subject { Id = 14, Name = "Physical Education" },
+                new Subject { Id = 15, Name = "Psychology" },
+                new Subject { Id = 16, Name = "Sociology" },
+                new Subject { Id = 17, Name = "Economics" },
+                new Subject { Id = 18, Name = "Business Studies" },
+                new Subject { Id = 19, Name = "Accounting" },
+                new Subject { Id = 20, Name = "Chemical Engineering" },
+                new Subject { Id = 21, Name = "Civil Engineering" },
+                new Subject { Id = 22, Name = "Electrical Engineering" },
+                new Subject { Id = 23, Name = "Mechanical Engineering" },
+                new Subject { Id = 24, Name = "Astronomy" },
+                new Subject { Id = 25, Name = "Environmental Science" },
+                new Subject { Id = 26, Name = "Political Science" },
+                new Subject { Id = 27, Name = "Law" },
+                new Subject { Id = 28, Name = "Philosophy" },
+                new Subject { Id = 29, Name = "Anthropology" },
+                new Subject { Id = 30, Name = "Archaeology" },
+                new Subject { Id = 31, Name = "Religious Studies" },
+                new Subject { Id = 32, Name = "Film Studies" },
+                new Subject { Id = 33, Name = "Media Studies" },
+                new Subject { Id = 34, Name = "Graphic Design" },
+                new Subject { Id = 35, Name = "Web Development" },
+                new Subject { Id = 36, Name = "Mobile App Development" },
+                new Subject { Id = 37, Name = "Data Science" },
+                new Subject { Id = 38, Name = "Machine Learning" },
+                new Subject { Id = 39, Name = "Artificial Intelligence" },
+                new Subject { Id = 40, Name = "Robotics" },
+                new Subject { Id = 41, Name = "Marketing" },
+                new Subject { Id = 42, Name = "Advertising" },
+                new Subject { Id = 43, Name = "Finance" },
+                new Subject { Id = 44, Name = "Statistics" },
+                new Subject { Id = 45, Name = "Mathematical Statistics" },
+                new Subject { Id = 46, Name = "Actuarial Science" },
+                new Subject { Id = 47, Name = "Literary Studies" }
+            );
+
+            builder.Entity<UserSubject>().HasKey(us => new { us.UserId, us.SubjectId });
         }
 
         //Seed roles

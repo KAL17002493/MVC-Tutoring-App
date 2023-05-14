@@ -266,5 +266,49 @@ namespace SAD.Controllers
             return RedirectToAction("TeacherProfileScreen", "Student", new { id = user.Id });
         }
 
+
+        //****Subject Section STUDENT Side****
+        // Display the list of subjects
+        public async Task<IActionResult> SelectSubjects()
+        {
+            // Fetch all subjects from the database
+            var subjects = await _context.Subject.ToListAsync();
+
+            // Pass the subjects to the view
+            return View(subjects);
+        }
+
+        // Save the selected subjects
+        [HttpPost]
+        public async Task<IActionResult> SelectSubjects(List<int> selectedSubjects)
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Check if any subjects were selected
+            if (selectedSubjects != null && selectedSubjects.Count > 0)
+            {
+                // For each selected subject, create a new UserSubject and add it to the database
+                foreach (var subjectId in selectedSubjects)
+                {
+                    var userSubject = new UserSubject
+                    {
+                        UserId = currentUser.Id,
+                        SubjectId = subjectId
+                    };
+
+                    await _context.UserSubject.AddAsync(userSubject);
+                }
+
+                // Save changes
+                await _context.SaveChangesAsync();
+            }
+
+            // Redirect to the index action (or any other action you prefer)
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

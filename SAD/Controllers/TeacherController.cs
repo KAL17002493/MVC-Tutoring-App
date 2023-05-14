@@ -170,6 +170,58 @@ namespace SAD.Controllers
         }
 
 
+        //****Subject Section TUTOR Side****
+        // Display the list of subjects
+        public async Task<IActionResult> SelectSubjects()
+        {
+            // Fetch all subjects from the database
+            var subjects = await _dbContext.Subject.ToListAsync();
+
+            // Pass the subjects to the view
+            return View(subjects);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SelectSubjects(List<int> selectedSubjects)
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Check if any subjects were selected
+            if (selectedSubjects != null && selectedSubjects.Count > 0)
+            {
+                // Before adding new subjects, remove all previously selected subjects for the user
+                var currentSubjects = await _dbContext.UserSubject
+                    .Where(us => us.UserId == currentUser.Id)
+                    .ToListAsync();
+
+                _dbContext.UserSubject.RemoveRange(currentSubjects);
+
+                // For each selected subject, create a new UserSubject and add it to the database
+                foreach (var subjectId in selectedSubjects)
+                {
+                    var userSubject = new UserSubject
+                    {
+                        UserId = currentUser.Id,
+                        SubjectId = subjectId
+                    };
+
+                    await _dbContext.UserSubject.AddAsync(userSubject);
+                }
+
+                // Save changes
+                await _dbContext.SaveChangesAsync();
+            }
+
+            // Redirect to the teacher profile (or any other action you prefer)
+            return RedirectToAction("TeacherProfile");
+        }
+
+
+
+
+
+
         public IActionResult ViewSlot()
         {
             return View();

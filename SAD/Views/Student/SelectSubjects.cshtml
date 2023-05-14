@@ -1,0 +1,14 @@
+﻿@model List<Subject>
+
+<h2>Select Subjects</h2>
+
+<form method="post">
+    @foreach (var subject in Model)
+    {
+        <div>
+            <input type="checkbox" id="@subject.Id" name="selectedSubjects" value="@subject.Id" />
+            <label for="@subject.Id">@subject.Name</label>
+        </div>
+    }
+    <input type="submit" value="Submit" />
+</form>
