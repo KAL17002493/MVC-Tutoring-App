@@ -32,10 +32,10 @@ namespace SAD.Controllers
 
         public async Task<IActionResult> TeacherScreenAsync(int page = 1)
         {
-            //Number of tutors per page
-            int pageSize = 8; 
+            // Number of tutors per page
+            int pageSize = 8;
 
-            //Find all tutors by role
+            // Find all tutors by role
             var role = await _roleManager.FindByNameAsync("Tutor");
             if (role == null)
             {
@@ -44,6 +44,36 @@ namespace SAD.Controllers
 
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
+
+            // Retrieve the subjects that the student wants to learn
+            var studentSubjects = await _context.UserSubject
+                .Where(us => us.UserId == currentUser.Id && us.IsTeachable == false)
+                .Select(us => us.SubjectId)
+                .ToListAsync();
+
+            // Get all users in the role
+            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
+
+            // Prepare a list to store the tutor and match count
+            var tutorMatches = new List<Tuple<CustomUserModel, int>>();
+
+            foreach (var tutor in allTutors)
+            {
+                // Get the subjects that the tutor can teach
+                var tutorSubjects = await _context.UserSubject
+                    .Where(us => us.UserId == tutor.Id && us.IsTeachable == true)
+                    .Select(us => us.SubjectId)
+                    .ToListAsync();
+
+                // Count the number of matching subjects
+                var matchCount = tutorSubjects.Intersect(studentSubjects).Count();
+
+                // Add the tutor and match count to the list
+                tutorMatches.Add(Tuple.Create(tutor, matchCount));
+            }
+
+            // Sort the tutors by the match count in descending order
+            tutorMatches = tutorMatches.OrderByDescending(tm => tm.Item2).ToList();
 
             // Get the list of followed teachers for the current user
             var followedTeachers = new List<CustomUserModel>();
@@ -57,31 +87,30 @@ namespace SAD.Controllers
                 }
             }
 
-            //Get all users in the role
-            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
-
-            //Exclude teacher whom the user is already following and teachers who are not available
+            // Exclude teacher whom the user is already following and teachers who are not available
             var publicTeachers = allTutors.Where(t => t.Available && !followedTeachers.Any(ft => ft.Id == t.Id)).ToList();
 
-            //Get the total count of public teachers
-            var totalPublicTeachers = publicTeachers.Count;
+            // Apply paging
+            var pagedTutorMatches = tutorMatches
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-            //Get the current page of public teachers
-            publicTeachers = publicTeachers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
-            //Create the view model instance
             var viewModel = new TeacherScreenViewModel
             {
-                PublicTeachers = publicTeachers,
                 FollowedTeachers = followedTeachers,
+                PublicTeachers = publicTeachers,
+                Tutors = pagedTutorMatches,
                 CurrentPage = page,
-                TotalPages = (int)Math.Ceiling(totalPublicTeachers / (double)pageSize)
+                TotalPages = (int)Math.Ceiling(tutorMatches.Count / (double)pageSize)
             };
 
-            //Return data to the view
-            return View(viewModel);
 
+            // Return data to the view
+            return View(viewModel);
         }
+
+
 
         public async Task<IActionResult> TeacherProfileScreen(string id)
         {
