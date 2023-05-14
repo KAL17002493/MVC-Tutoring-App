@@ -26,16 +26,24 @@ namespace SAD.Controllers
         //TEACHER PROFILE SECTION
         public async Task<IActionResult> TeacherProfile()
         {
-            //Get current user
+            // Get current user
             var user = await _userManager.GetUserAsync(User);
 
-            //Check if current user exists
+            // Check if current user exists
             if (user == null)
             {
                 return NotFound();
             }
 
-            //Pass the user model to view
+            // Count the number of students following the current user
+            var studentCount = await _dbContext.Follow
+                .Where(f => f.FollowingId == user.Id)
+                .CountAsync();
+
+            // Pass the student count to the view through ViewBag
+            ViewBag.StudentCount = studentCount;
+
+            // Pass the user model to view
             return View(user);
         }
 
@@ -88,10 +96,10 @@ namespace SAD.Controllers
         //Get booken lessons from database for logged in teacher for current week
         public async Task<IActionResult> BookedLessons()
         {
-            // Get the current user
+            //Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Get the start and end of the week
+            //Get the start and end of the week
             DateTime startOfWeek;
 
             //Determins start of current week (Monday) based on todays date
@@ -109,7 +117,7 @@ namespace SAD.Controllers
             //Calcuates the end of the week date
             var endOfWeek = startOfWeek.AddDays(7);
 
-            // Get the list of lessons where the current user is the tutor and include the Student information
+            //Get the list of lessons where the current user is the tutor and include the Student information
             var lessons = await _dbContext.Booking
                 .Include(b => b.Student)
                 .Where(b => b.TutorId == currentUser.Id && b.TimeSlot >= startOfWeek && b.TimeSlot < endOfWeek)
@@ -136,7 +144,7 @@ namespace SAD.Controllers
         }
 
 
-
+        //Cancel lessons
         public async Task<IActionResult> CancelLesson(string lessonId)
         {
             //Retrieve the lesson from the database based on the provided lessonId
