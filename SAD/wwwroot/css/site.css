@@ -17,18 +17,7 @@ html {
     }
 }
 
-/* Changes the size of calendar cards */
-@media (min-width: 992px) {
-    .calCard {
-        height: 200px;
-        text-decoration: none;
-        color: inherit;
-    }
 
-    .col-lg-1 {
-        flex-basis: 8.333333%;
-    }
-}
 
 .roundImage {
     border-radius: 50% !important;
@@ -46,13 +35,7 @@ html {
     margin: 0;
 }
 
-.cardToday {
-    background-color: #9aed91;
-}
 
-.cardOld {
-    background-color: #adadad;
-}
 
 body {
     margin-bottom: 60px;
@@ -76,6 +59,7 @@ body {
     padding: 0;
 }
 
+/***********Teacher Screen backgrounds***********/
 .Orange {
     background-color: rgba(255, 179, 129, 0.5);
     padding: 20px;
@@ -84,6 +68,28 @@ body {
 .Blue {
     background-color: rgba(0, 130, 189, 0.5);
     padding: 20px;
+}
+
+/***********Card Today / Card Old Colours***********/
+.cardToday {
+    background-color: #9aed91;
+}
+
+.cardOld {
+    background-color: #adadad;
+}
+
+/* Changes the size of calendar cards */
+@media (min-width: 992px) {
+    .calCard {
+        height: 200px;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .col-lg-1 {
+        flex-basis: 8.333333%;
+    }
 }
 
 /***********PUBLIC INDEX VIEW CARD STYLING***********/
