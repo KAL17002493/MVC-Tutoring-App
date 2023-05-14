@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SAD.Data;
 using SAD.Models;
 
@@ -10,11 +11,11 @@ namespace SAD.Controllers
     public class TeacherController : Controller
     {
         private readonly UserManager<CustomUserModel> _userManager;
-        //private readonly ApplicationDbContext dbContext;
-        public TeacherController(UserManager<CustomUserModel> userManager/*, ApplicationDbContext dbContext*/)
+        private readonly ApplicationDbContext _dbContext;
+        public TeacherController(UserManager<CustomUserModel> userManager, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
-            //_dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -83,6 +84,47 @@ namespace SAD.Controllers
             // Redirect to the public profile view with this user's ID
             return RedirectToAction("Index", "Public", new { id = user.Id });
         }
+
+        //Get booken lessons from database for logged in teacher
+        public async Task<IActionResult> BookedLessons()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Get the list of lessons where the current user is the student and include the Tutor information
+            var lessons = await _dbContext.Booking
+                .Include(b => b.Student)
+                .Where(b => b.TutorId == currentUser.Id)
+                .ToListAsync();
+
+            // Return the list of lessons to the view
+            return View(lessons);
+        }
+
+        public async Task<IActionResult> CancelLesson(string lessonId)
+        {
+            //Retrieve the lesson from the database based on the provided lessonId
+            var lesson = await _dbContext.Booking.FindAsync(lessonId);
+
+            //Check if the lesson exists
+            if (lesson == null)
+            {
+                return NotFound();
+            }
+
+            //Update the status of the lesson to "Cancelled"
+            //lesson.Status = BookingStatus.Cancelled;
+
+            // Remove the lesson from the context
+            _dbContext.Booking.Remove(lesson);
+
+            // Save the changes to the database
+            await _dbContext.SaveChangesAsync();
+
+            //Redirect to the BookedLessons view
+            return RedirectToAction("BookedLessons");
+        }
+
 
         public IActionResult ViewSlot()
         {

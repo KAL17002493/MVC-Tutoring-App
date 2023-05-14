@@ -86,13 +86,9 @@ body {
     padding: 20px;
 }
 
-.footer {
-
-
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #f2c2f2;
+/***********NAV ITEM TEXT COLOUR***********/
+.textDark {
+    color: crimson;
 }
 
 /***********TEACHERSCREEN VIEW***********/

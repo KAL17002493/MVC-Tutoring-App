@@ -19,7 +19,7 @@
                             <text>(Booked)</text>
                             @if (User.IsInRole("Tutor")) 
                             {
-                                <a href="@Url.Action("ViewSlot", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
+                                <a href="@Url.Action("RedirectToPublicController", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
                             }
                         }
                     </h5>
@@ -28,7 +28,7 @@
                     {
                         @if (User.IsInRole("Tutor")) 
                         {
-                            <a href="@Url.Action("ViewSlot", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
+                            <a href="@Url.Action("RedirectToPublicController", "Teacher", new { bookingId = slot.SlotId })" class="stretched-link"></a>
                         }
                         else
                         {
