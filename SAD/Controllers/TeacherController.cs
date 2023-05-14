@@ -203,7 +203,8 @@ namespace SAD.Controllers
                     var userSubject = new UserSubject
                     {
                         UserId = currentUser.Id,
-                        SubjectId = subjectId
+                        SubjectId = subjectId,
+                        IsTeachable = true
                     };
 
                     await _dbContext.UserSubject.AddAsync(userSubject);
