@@ -26,24 +26,24 @@ namespace SAD.Controllers
         //TEACHER PROFILE SECTION
         public async Task<IActionResult> TeacherProfile()
         {
-            // Get current user
+            //Get current user
             var user = await _userManager.GetUserAsync(User);
 
-            // Check if current user exists
+            //Check if current user exists
             if (user == null)
             {
                 return NotFound();
             }
 
-            // Count the number of students following the current user
+            //Count the number of students following the current user
             var studentCount = await _dbContext.Follow
                 .Where(f => f.FollowingId == user.Id)
                 .CountAsync();
 
-            // Pass the student count to the view through ViewBag
+            //Pass the student count to the view through ViewBag
             ViewBag.StudentCount = studentCount;
 
-            // Pass the user model to view
+            //Pass the user model to view
             return View(user);
         }
 

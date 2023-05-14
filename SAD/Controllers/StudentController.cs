@@ -243,11 +243,28 @@ namespace SAD.Controllers
             return RedirectToAction("BookedLessons");
         }
 
+        //Find Teacher by their Teacher code
+        [HttpPost]
+        public IActionResult FindTeacher(string teacherCode)
+        {
+            //Check if the teacher code is empty, if empty reload the page
+            if (string.IsNullOrEmpty(teacherCode))
+            {
+                return RedirectToAction("TeacherScreen", "Student");
+            }
 
+            //Get the user with the provided teacher code
+            var user = _context.Users.FirstOrDefault(u => u.teacherCode == teacherCode);
 
+            //Check if the teacher code exists if not relaod the page
+            if (user == null)
+            {
+                return RedirectToAction("TeacherScreen", "Student");
+            }
 
-
-
+            //Redirect to the TeacherProfile action in the Student controller
+            return RedirectToAction("TeacherProfileScreen", "Student", new { id = user.Id });
+        }
 
     }
 }
