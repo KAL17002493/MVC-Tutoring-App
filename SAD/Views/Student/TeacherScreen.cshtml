@@ -82,8 +82,7 @@
 
             <!--Previous button-->
             <div class="mx-1">
-                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })"
-                   class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
+                   <a id="previousPage" href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })" class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
             </div>
 
             <!-- Outputs limited number of page numbers, limited to 3 -->
@@ -101,8 +100,7 @@
 
             <!--Next button-->
             <div class="mx-1">
-                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })"
-                   class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
+                <a id="nextPage" href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })" class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
             </div>
         </div>
     </div>

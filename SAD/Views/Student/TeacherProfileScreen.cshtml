@@ -36,7 +36,7 @@
         {
                 <form method="post" action="@Url.Action("UnfollowTeacher", "Student")">
                     <input type="hidden" name="teacherId" value="@Model.Teacher.Id" />
-                    <button type="submit" class="btn btn-danger w-100">Unfollow</button>
+                    <button id="unfollow" type="submit" class="btn btn-danger w-100">Unfollow</button>
                 </form>
 
         }
@@ -45,7 +45,7 @@
         <!--Follow Button-->
             <form method="post" action="@Url.Action("FollowTeacher", "Student")">
                 <input type="hidden" name="teacherId" value="@Model.Teacher.Id" />
-                <button type="submit" class="btn btn-primary flex-fill w-100">Follow</button>
+                    <button id="follow" type="submit" class="btn btn-primary flex-fill w-100">Follow</button>
             </form>
         
         }
@@ -55,7 +55,7 @@
         {
         <div class="col-md-6">
             <div>
-                <a href="@Url.Action("Index", "Public",  new { id = Model.Teacher.Id })" class="btn btn-success w-100">Book Lessons</a>
+                <a id="bookLessons" href="@Url.Action("Index", "Public",  new { id = Model.Teacher.Id })" class="btn btn-success w-100">Book Lessons</a>
             </div>
         </div>
         }
