@@ -331,7 +331,7 @@ namespace SAD.Controllers
             }
 
             // Redirect to the index action (or any other action you prefer)
-            return RedirectToAction("Index");
+            return RedirectToAction("TeacherScreen");
         }
 
 
