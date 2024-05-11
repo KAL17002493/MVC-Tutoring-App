@@ -48,7 +48,7 @@
 <div class="Orange">
     <h2 class="mb-4 mx-2">Public Tutors</h2>
     <!-- If no teachers are found, display message -->
-    @if (Model.PublicTeachers.Count == 0)
+    @if (Model.Tutors?.Count == 0)
     {
         <p>No users of Role Teacher found.</p>
     }
@@ -56,20 +56,25 @@
     {
         <div class="container">
             <div class="row">
-                <!--Displays all publc teacher in a card-->
-                @foreach (var tutor in Model.PublicTeachers)
+                <!--Displays all public teacher in a card-->
+                @foreach (var tutorMatch in Model.Tutors)
                 {
+                    var tutor = tutorMatch.Item1;
+                    var matchCount = tutorMatch.Item2;
+
                     <div class="col-sm-6 col-md-4 col-lg-3 mb-3 mx-0">
                         <div class="card publicTeacher-card">
                             <div class="card-body">
                                 <h5>@tutor.FName @tutor.SName</h5>
                                 <p class="card-text">@tutor.Email</p>
+                                <p class="card-text">Matching subjects: @matchCount</p>
                                 <a href="@Url.Action("TeacherProfileScreen", "Student", new { id = tutor.Id })" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>
                 }
             </div>
+
            <div class="row">
     <div class="col-md-12 d-flex justify-content-center align-items-end">
         <!-- Pagination (Creates page links at the bottom of the section) -->
@@ -77,8 +82,7 @@
 
             <!--Previous button-->
             <div class="mx-1">
-                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })"
-                   class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
+                   <a id="previousPage" href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage - 1 })" class="@(Model.CurrentPage == 1 ? "disabled" : "")">Previous</a>
             </div>
 
             <!-- Outputs limited number of page numbers, limited to 3 -->
@@ -96,8 +100,7 @@
 
             <!--Next button-->
             <div class="mx-1">
-                <a href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })"
-                   class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
+                <a id="nextPage" href="@Url.Action("TeacherScreen", "Student", new { page = Model.CurrentPage + 1 })" class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">Next</a>
             </div>
         </div>
     </div>

@@ -32,20 +32,24 @@ namespace SAD.Controllers
 
         public async Task<IActionResult> TeacherScreenAsync(int page = 1)
         {
-            //Number of tutors per page
-            int pageSize = 8; 
+            int pageSize = 8;
 
-            //Find all tutors by role
             var role = await _roleManager.FindByNameAsync("Tutor");
             if (role == null)
             {
                 return NotFound();
             }
 
-            // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Get the list of followed teachers for the current user
+            var studentSubjects = await _context.UserSubject
+                .Where(us => us.UserId == currentUser.Id && us.IsTeachable == false)
+                .Select(us => us.SubjectId)
+                .ToListAsync();
+
+            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
+
+            // Find the teachers the user is already following
             var followedTeachers = new List<CustomUserModel>();
             if (currentUser != null)
             {
@@ -57,33 +61,55 @@ namespace SAD.Controllers
                 }
             }
 
-            //Get all users in the role
-            var allTutors = (await _userManager.GetUsersInRoleAsync(role.Name)).ToList();
-
-            //Exclude teacher whom the user is already following and teachers who are not available
+            // Exclude teachers whom the user is already following and teachers who are not available
             var publicTeachers = allTutors.Where(t => t.Available && !followedTeachers.Any(ft => ft.Id == t.Id)).ToList();
 
-            //Get the total count of public teachers
-            var totalPublicTeachers = publicTeachers.Count;
+            // Get all the UserSubjects for the tutors in a single database query
+            var allTutorSubjects = await _context.UserSubject
+                .Where(us => publicTeachers.Select(t => t.Id).Contains(us.UserId) && us.IsTeachable == true)
+                .ToListAsync();
 
-            //Get the current page of public teachers
-            publicTeachers = publicTeachers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var tutorMatches = new List<Tuple<CustomUserModel, int>>();
 
-            //Create the view model instance
+            // Use Parallel.ForEach for concurrent processing
+            Parallel.ForEach(publicTeachers, tutor =>
+            {
+                var tutorSubjects = allTutorSubjects
+                    .Where(us => us.UserId == tutor.Id)
+                    .Select(us => us.SubjectId)
+                    .ToList();
+
+                var matchCount = tutorSubjects.Intersect(studentSubjects).Count();
+
+                lock (tutorMatches)
+                {
+                    tutorMatches.Add(Tuple.Create(tutor, matchCount));
+                }
+            });
+
+            tutorMatches = tutorMatches.OrderByDescending(tm => tm.Item2).ToList();
+
+            var pagedTutorMatches = tutorMatches
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
             var viewModel = new TeacherScreenViewModel
             {
-                PublicTeachers = publicTeachers,
                 FollowedTeachers = followedTeachers,
+                PublicTeachers = publicTeachers,
+                Tutors = pagedTutorMatches,
                 CurrentPage = page,
-                TotalPages = (int)Math.Ceiling(totalPublicTeachers / (double)pageSize)
+                TotalPages = (int)Math.Ceiling(tutorMatches.Count / (double)pageSize)
             };
 
-            //Return data to the view
+            // Return data to the view
             return View(viewModel);
 
         }
 
-        public async Task<IActionResult> TeacherProfileScreen(string id)
+
+            public async Task<IActionResult> TeacherProfileScreen(string id)
         {
             //Get teacher by ID
             var teacherProfile = await _userManager.FindByIdAsync(id);
@@ -265,6 +291,50 @@ namespace SAD.Controllers
             //Redirect to the TeacherProfile action in the Student controller
             return RedirectToAction("TeacherProfileScreen", "Student", new { id = user.Id });
         }
+
+
+        //****Subject Section STUDENT Side****
+        // Display the list of subjects
+        public async Task<IActionResult> SelectSubjects()
+        {
+            // Fetch all subjects from the database
+            var subjects = await _context.Subject.ToListAsync();
+
+            // Pass the subjects to the view
+            return View(subjects);
+        }
+
+        // Save the selected subjects
+        [HttpPost]
+        public async Task<IActionResult> SelectSubjects(List<int> selectedSubjects)
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Check if any subjects were selected
+            if (selectedSubjects != null && selectedSubjects.Count > 0)
+            {
+                // For each selected subject, create a new UserSubject and add it to the database
+                foreach (var subjectId in selectedSubjects)
+                {
+                    var userSubject = new UserSubject
+                    {
+                        UserId = currentUser.Id,
+                        SubjectId = subjectId
+                    };
+
+                    await _context.UserSubject.AddAsync(userSubject);
+                }
+
+                // Save changes
+                await _context.SaveChangesAsync();
+            }
+
+            // Redirect to the index action (or any other action you prefer)
+            return RedirectToAction("TeacherScreen");
+        }
+
+
 
     }
 }
