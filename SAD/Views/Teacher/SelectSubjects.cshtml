@@ -3,12 +3,27 @@
 <h2>Select Subjects</h2>
 
 <form method="post">
-    @foreach (var subject in Model)
-    {
-        <div>
-            <input type="checkbox" id="@subject.Id" name="selectedSubjects" value="@subject.Id" />
-            <label for="@subject.Id">@subject.Name</label>
+    <div class="container">
+        <div class="row mt-5 mb-2">
+            <input class="btn btn-success col-sm-6 col-md-4 col-lg-3 mb-3" id="saveSubjects" type="submit" value="Save" />
+            @foreach (var subject in Model)
+            {
+                var isChecked = ViewBag.UserSubjectIds != null && ViewBag.UserSubjectIds.Contains(subject.Id);
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card myTeacher-card @(isChecked ? "border-danger" : "")">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <input type="checkbox" id="@subject.Id" name="selectedSubjects" value="@subject.Id" @(isChecked ? "checked" : "") />
+                                </div>
+                                <div class="col">
+                                    <label for="@subject.Id">@subject.Name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    }
-    <input id="saveSubjects" type="submit" value="Submit" />
+    </div>
 </form>

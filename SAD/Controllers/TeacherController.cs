@@ -177,45 +177,67 @@ namespace SAD.Controllers
             // Fetch all subjects from the database
             var subjects = await _dbContext.Subject.ToListAsync();
 
-            // Pass the subjects to the view
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            // Fetch the subjects the current user is subscribed to
+            var userSubjectIds = await _dbContext.UserSubject
+                                                .Where(us => us.UserId == currentUser.Id)
+                                                .Select(us => us.SubjectId)
+                                                .ToListAsync();
+
+            // Pass the subjects and userSubjectIds to the view
+            ViewBag.UserSubjectIds = userSubjectIds;
+
             return View(subjects);
         }
 
+        // Save the selected subjects
         [HttpPost]
         public async Task<IActionResult> SelectSubjects(List<int> selectedSubjects)
         {
             // Get the current user
             var currentUser = await _userManager.GetUserAsync(User);
 
-            // Check if any subjects were selected
-            if (selectedSubjects != null && selectedSubjects.Count > 0)
+            // Fetch the current user's subscribed subjects
+            var currentUserSubjects = await _dbContext.UserSubject
+                                                     .Where(us => us.UserId == currentUser.Id)
+                                                     .ToListAsync();
+
+            // Determine which subjects to add and which to remove
+            var selectedSubjectIds = selectedSubjects ?? new List<int>();
+            var currentSubjectIds = currentUserSubjects.Select(us => us.SubjectId).ToList();
+
+            var subjectsToAdd = selectedSubjectIds.Except(currentSubjectIds).ToList();
+            var subjectsToRemove = currentSubjectIds.Except(selectedSubjectIds).ToList();
+
+            // Add new subscriptions
+            foreach (var subjectId in subjectsToAdd)
             {
-                // Before adding new subjects, remove all previously selected subjects for the user
-                var currentSubjects = await _dbContext.UserSubject
-                    .Where(us => us.UserId == currentUser.Id)
-                    .ToListAsync();
-
-                _dbContext.UserSubject.RemoveRange(currentSubjects);
-
-                // For each selected subject, create a new UserSubject and add it to the database
-                foreach (var subjectId in selectedSubjects)
+                var userSubject = new UserSubject
                 {
-                    var userSubject = new UserSubject
-                    {
-                        UserId = currentUser.Id,
-                        SubjectId = subjectId,
-                        IsTeachable = true
-                    };
-
-                    await _dbContext.UserSubject.AddAsync(userSubject);
-                }
-
-                // Save changes
-                await _dbContext.SaveChangesAsync();
+                    UserId = currentUser.Id,
+                    SubjectId = subjectId,
+                    IsTeachable = true
+                };
+                await _dbContext.UserSubject.AddAsync(userSubject);
             }
 
-            // Redirect to the teacher profile (or any other action you prefer)
-            return RedirectToAction("TeacherProfile");
+            // Remove unselected subscriptions
+            foreach (var subjectId in subjectsToRemove)
+            {
+                var userSubject = currentUserSubjects.FirstOrDefault(us => us.SubjectId == subjectId);
+                if (userSubject != null)
+                {
+                    _dbContext.UserSubject.Remove(userSubject);
+                }
+            }
+
+            // Save changes
+            await _dbContext.SaveChangesAsync();
+
+            // Redirect to the index action (or any other action you prefer)
+            return RedirectToAction("SelectSubjects");
         }
 
 
