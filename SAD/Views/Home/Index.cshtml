@@ -12,6 +12,7 @@
                     <h5 class="card-title">Student</h5>
                     <p class="card-text">Email: student@student.com</p>
                     <p class="card-text">Password: Qwe123!</p>
+                    <a href="/Home/AutoLoginStudent" class="stretched-link"></a>
                 </div>
             </div>
         </div>
@@ -22,9 +23,25 @@
                     <h5 class="card-title">Tutor</h5>
                     <p class="card-text">Email: tutor@tutor.com</p>
                     <p class="card-text">Password: Qwe123!</p>
+                    <a href="/Home/AutoLoginTutor" class="stretched-link"></a>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <div id="informativeMessage" class="alert alert-danger text-center mt-3 fw-bold" role="alert">
+        Click on either of the cards to log in as a Student or a Tutor automatically.
+    </div>
+
 </div>
+
+<script>
+    //Fate out informative message after specific time
+    document.addEventListener("DOMContentLoaded", function () {
+        var informativeMessage = document.getElementById("informativeMessage");
+        setTimeout(function () {
+            informativeMessage.classList.add("fade-out");
+        }, 5000); //5 seconds
+    });
+</script>

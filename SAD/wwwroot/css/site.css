@@ -17,7 +17,11 @@ html {
     }
 }
 
-
+/*Fads out in 1 sec (Using it to fade out javascript message on home page)*/
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
 
 .roundImage {
     border-radius: 50% !important;

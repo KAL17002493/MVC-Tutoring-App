@@ -10,7 +10,15 @@
 }
 
 <h1>Account management</h1>
-
+<!--Hides account management options if user is either of the following accounts-->
+@if (User.Identity.Name == "student@student.com" || User.Identity.Name == "tutor@tutor.com")
+{
+    <div class="text-danger mt-5">
+        <h2>student@student.com and tutor@tutor.com cannot change user details</h2>
+    </div>
+}
+else
+{
 <div>
     <hr />
     <div class="row">
@@ -22,6 +30,7 @@
         </div>
     </div>
 </div>
+}
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
