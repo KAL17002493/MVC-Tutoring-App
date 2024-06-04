@@ -9,7 +9,7 @@
     }
 }
 
-<h1>Account management</h1>
+
 <!--Hides account management options if user is either of the following accounts-->
 @if (User.Identity.Name == "student@student.com" || User.Identity.Name == "tutor@tutor.com")
 {
@@ -19,6 +19,8 @@
 }
 else
 {
+    <h1>Account management</h1>
+
 <div>
     <hr />
     <div class="row">
